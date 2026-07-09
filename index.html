@@ -1,0 +1,2381 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>GETMANENKO DESSERT — Премиальные торты и десерты на заказ</title>
+    <meta name="description" content="Авторские торты и десерты на заказ в Тимашевске. 25 изысканных начинок, натуральные премиум-ингредиенты, уникальный дизайн для вашего торжества." />
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..700;1,400..700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "bg-cream": "var(--color-bg)",
+                        "brand-primary": "#775a19",
+                        "brand-dark": "var(--color-text-main)",
+                        "brand-secondary": "var(--color-text-sec)",
+                        "brand-gold": "#c5a059",
+                        "brand-light-gold": "#ffdea5",
+                        "brand-border": "var(--color-border)"
+                    },
+                    fontFamily: {
+                        serif: ["EB Garamond", "serif"],
+                        sans: ["Inter", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        :root {
+            --color-bg: #fcf9f8;
+            --color-card: #ffffff;
+            --color-text-main: #1c1b1b;
+            --color-text-sec: #5e5e5b;
+            --color-border: #e5e2e1;
+            --color-footer: #f4f1ef;
+            --color-glass: rgba(252, 249, 248, 0.85);
+        }
+        
+        html.dark {
+            --color-bg: #121212;
+            --color-card: #1c1c1c;
+            --color-text-main: #fcf9f8;
+            --color-text-sec: #a3a39e;
+            --color-border: #2d2d2d;
+            --color-footer: #181818;
+            --color-glass: rgba(18, 18, 18, 0.85);
+        }
+        
+        body {
+            background-color: var(--color-bg);
+            color: var(--color-text-main);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--color-bg);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c5a059;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #775a19;
+        }
+        
+        .glassmorphism {
+            background: var(--color-glass);
+            backdrop-filter: blur(12px);
+            transition: background 0.3s ease;
+        }
+
+        /* Overrides for dark mode */
+        html.dark .bg-white {
+            background-color: var(--color-card) !important;
+        }
+        html.dark .bg-bg-cream {
+            background-color: var(--color-bg) !important;
+        }
+        html.dark .bg-\[\#f4f1ef\] {
+            background-color: var(--color-footer) !important;
+        }
+        html.dark .border-brand-border {
+            border-color: var(--color-border) !important;
+        }
+        html.dark .border-brand-border\/30,
+        html.dark .border-brand-border\/40,
+        html.dark .border-brand-border\/50,
+        html.dark .border-brand-border\/60 {
+            border-color: rgba(255, 255, 255, 0.08) !important;
+        }
+        html.dark .text-brand-dark {
+            color: var(--color-text-main) !important;
+        }
+        html.dark .text-brand-secondary {
+            color: var(--color-text-sec) !important;
+        }
+        html.dark input, html.dark select, html.dark textarea {
+            background-color: #242424 !important;
+            border-color: #3a3a3a !important;
+            color: #fcf9f8 !important;
+        }
+        html.dark #main-nav {
+            border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+        }
+        html.dark #filling-modal .bg-bg-cream {
+            background-color: var(--color-card) !important;
+        }
+        
+        /* Scroll animations custom styles */
+        .reveal-item {
+            opacity: 0;
+            transform: translateY(35px);
+            transition: opacity 0.8s cubic-bezier(0.215, 0.61, 0.355, 1), transform 0.8s cubic-bezier(0.215, 0.61, 0.355, 1);
+            will-change: opacity, transform;
+        }
+        
+        .reveal-item.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Accordion transition */
+        .faq-answer {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+            opacity: 1;
+        }
+        
+        /* Card fade wave animation */
+        @keyframes cardFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-card-fade {
+            animation: cardFadeIn 0.6s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+        }
+        
+        /* 3D Tilt Effect */
+        .tilt-card {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
+            position: relative;
+        }
+        
+        .tilt-shine {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.15) 0%, transparent 60%);
+            mix-blend-mode: overlay;
+            opacity: 0;
+            transition: opacity 0.15s ease;
+            z-index: 10;
+        }
+        
+        .tilt-card:hover .tilt-shine {
+            opacity: 1;
+        }
+        
+        html.dark .tilt-shine {
+            background: radial-gradient(circle at 50% 50%, rgba(255, 222, 165, 0.08) 0%, transparent 60%);
+        }
+        
+        /* Carousel styling */
+        .carousel-container {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+        
+        .carousel-track {
+            display: flex;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            cursor: grab;
+            user-select: none;
+        }
+        
+        .carousel-track:active {
+            cursor: grabbing;
+        }
+        
+        .carousel-slide {
+            flex: 0 0 100%;
+            padding: 0 12px;
+            box-sizing: border-box;
+        }
+        
+        @media (min-width: 640px) {
+            .carousel-slide {
+                flex: 0 0 50%;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .carousel-slide {
+                flex: 0 0 33.333%;
+            }
+        }
+    </style>
+    <!-- Firebase SDK (Compatibility Version for CDN usage) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
+</head>
+<body class="bg-bg-cream text-brand-dark font-sans antialiased selection:bg-brand-light-gold selection:text-brand-primary">
+
+    <!-- Top Navigation Bar -->
+    <nav class="fixed top-0 left-0 w-full z-50 transition-all duration-300 border-b border-brand-border/40 glassmorphism" id="main-nav">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#hero" class="flex items-center gap-3">
+                <img src="logo_desert.png" alt="GETMANENKO DESSERT" class="w-10 h-10 object-contain rounded-full border border-brand-gold/30 bg-white shadow-sm" />
+                <div class="flex flex-col items-start">
+                    <span class="font-serif text-xl md:text-2xl font-semibold tracking-wider text-brand-primary leading-none">GETMANENKO</span>
+                    <span class="text-[9px] uppercase tracking-[0.3em] text-brand-secondary font-medium mt-0.5">DESSERT</span>
+                </div>
+            </a>
+            
+            <!-- Desktop Links -->
+            <div class="hidden md:flex gap-6 lg:gap-8 items-center">
+                <a class="nav-link text-sm font-semibold uppercase tracking-wider text-brand-primary border-b-2 border-brand-primary pb-1 transition-all" href="#hero">Главная</a>
+                <a class="nav-link text-sm font-semibold uppercase tracking-wider text-brand-secondary hover:text-brand-primary transition-all" href="#gallery">Галерея</a>
+                <a class="nav-link text-sm font-semibold uppercase tracking-wider text-brand-secondary hover:text-brand-primary transition-all" href="#fillings">Начинки</a>
+                <a class="nav-link text-sm font-semibold uppercase tracking-wider text-brand-secondary hover:text-brand-primary transition-all" href="#desserts">Десерты</a>
+                <a class="nav-link text-sm font-semibold uppercase tracking-wider text-brand-secondary hover:text-brand-primary transition-all" href="#faq">FAQ</a>
+                <a class="nav-link text-sm font-semibold uppercase tracking-wider text-brand-secondary hover:text-brand-primary transition-all" href="#contacts">Контакты</a>
+            </div>
+            
+            <div class="hidden md:flex items-center gap-4">
+                <!-- Theme Toggle Desktop -->
+                <button id="theme-toggle" class="p-2 text-brand-primary hover:text-brand-gold transition-all duration-300 flex items-center justify-center focus:outline-none" aria-label="Переключить тему">
+                    <span class="material-symbols-outlined text-2xl transition-transform duration-500">dark_mode</span>
+                </button>
+                <a href="#quick-contact" class="px-5 py-2.5 bg-brand-primary text-white hover:bg-brand-gold text-xs font-semibold uppercase tracking-widest rounded-sm transition-all duration-300">
+                    Связаться
+                </a>
+            </div>
+            
+            <div class="flex items-center gap-2 md:hidden">
+                <!-- Theme Toggle Mobile -->
+                <button id="theme-toggle-mobile" class="p-2 text-brand-dark transition-all duration-300 flex items-center justify-center focus:outline-none" aria-label="Переключить тему">
+                    <span class="material-symbols-outlined text-2xl transition-transform duration-500">dark_mode</span>
+                </button>
+                <button class="text-brand-dark" id="menu-btn" aria-label="Открыть меню">
+                    <span class="material-symbols-outlined text-3xl">menu</span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Dropdown Menu -->
+        <div class="hidden md:hidden border-t border-brand-border/50 glassmorphism w-full absolute left-0 top-full px-6 py-6 flex flex-col gap-5 shadow-lg transition-all z-50" id="mobile-menu">
+            <a class="mobile-nav-link text-base font-semibold uppercase tracking-wider text-brand-primary" href="#hero">Главная</a>
+            <a class="mobile-nav-link text-base font-semibold uppercase tracking-wider text-brand-dark hover:text-brand-primary" href="#gallery">Галерея</a>
+            <a class="mobile-nav-link text-base font-semibold uppercase tracking-wider text-brand-dark hover:text-brand-primary" href="#fillings">Начинки</a>
+            <a class="mobile-nav-link text-base font-semibold uppercase tracking-wider text-brand-dark hover:text-brand-primary" href="#desserts">Десерты</a>
+            <a class="mobile-nav-link text-base font-semibold uppercase tracking-wider text-brand-dark hover:text-brand-primary" href="#faq">FAQ</a>
+            <a class="mobile-nav-link text-base font-semibold uppercase tracking-wider text-brand-dark hover:text-brand-primary" href="#contacts">Контакты</a>
+            <a href="#quick-contact" class="w-full text-center py-3 bg-brand-primary text-white text-sm font-semibold uppercase tracking-widest rounded-sm">
+                Связаться с нами
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-20">
+        
+        <!-- Hero Section -->
+        <section class="relative min-h-[85vh] flex items-center justify-center overflow-hidden" id="hero">
+            <!-- Background Decoration with refined gradients and minimalist SVG sketch drawings -->
+            <div class="absolute inset-0 z-0 bg-gradient-to-tr from-bg-cream via-brand-light-gold/15 to-bg-cream dark:from-bg-cream dark:via-brand-primary/5 dark:to-bg-cream">
+                <!-- Pinterest-style outline doodles in background -->
+                <div class="absolute top-[15%] left-[8%] w-48 h-48 opacity-[0.06] dark:opacity-[0.03] text-brand-gold pointer-events-none">
+                    <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1">
+                        <!-- Minimalist Whisk -->
+                        <path d="M50 20 C45 35 30 50 30 65 C30 75 40 85 50 85 C60 85 70 75 70 65 C70 50 55 35 50 20 Z" />
+                        <path d="M50 20 C48 35 40 50 40 65 C40 73 45 80 50 80 C55 80 60 73 60 65 C60 50 52 35 50 20 Z" />
+                        <path d="M50 20 L50 85" />
+                        <path d="M50 20 L50 10" stroke-width="2.5" />
+                        <circle cx="50" cy="8" r="2" fill="currentColor" />
+                    </svg>
+                </div>
+                <div class="absolute bottom-[12%] right-[10%] w-56 h-56 opacity-[0.06] dark:opacity-[0.03] text-brand-gold pointer-events-none">
+                    <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1">
+                        <!-- Elegant outline cake -->
+                        <path d="M20 75 L80 75 L75 45 L25 45 Z" />
+                        <path d="M30 45 L70 45 L65 25 L35 25 Z" />
+                        <path d="M10 75 L90 75 L85 80 L15 80 Z" />
+                        <path d="M50 25 L50 15" />
+                        <circle cx="50" cy="12" r="2.5" fill="currentColor" />
+                    </svg>
+                </div>
+            </div>
+            
+            <div class="relative z-10 max-w-3xl mx-auto px-6 text-center py-10 md:py-16 bg-bg-cream/80 backdrop-blur-sm rounded-2xl border border-brand-border/40 shadow-sm flex flex-col items-center">
+                <span class="text-xs md:text-sm font-semibold tracking-[0.35em] text-brand-primary dark:text-brand-light-gold uppercase mb-4">кондитерская студия</span>
+                <h1 class="font-serif text-4xl md:text-6xl font-light tracking-tight text-brand-dark mb-6 leading-tight">
+                    Искусство в каждом <br class="hidden md:inline"/><span class="italic text-brand-primary font-normal font-serif">десерте</span>
+                </h1>
+                <p class="text-sm md:text-base text-brand-secondary max-w-xl mb-8 leading-relaxed font-light">
+                    Создаем эксклюзивные свадебные, праздничные и детские торты из натуральных ингредиентов высшего качества. Каждая деталь — ручная работа.
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
+                    <a class="px-8 py-4 bg-brand-primary text-white hover:bg-brand-gold hover:shadow-lg transition-all duration-300 font-semibold tracking-widest text-xs uppercase rounded-sm w-full sm:w-auto" href="#fillings">
+                        Выбрать начинку
+                    </a>
+                    <a class="px-8 py-4 border border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white transition-all duration-300 font-semibold tracking-widest text-xs uppercase rounded-sm w-full sm:w-auto" href="#quick-contact">
+                        Связаться
+                    </a>
+                    <button onclick="openVideoModal()" class="flex items-center gap-3 text-brand-primary hover:text-brand-gold transition-colors font-semibold uppercase tracking-wider text-xs focus:outline-none group mt-2 sm:mt-0" aria-label="Смотреть видео процесса">
+                        <div class="relative w-12 h-12 rounded-full border border-brand-primary/20 flex items-center justify-center bg-white/50 backdrop-blur-sm group-hover:scale-105 transition-all">
+                            <div class="absolute inset-0 rounded-full bg-brand-gold/20 animate-ping opacity-75"></div>
+                            <span class="material-symbols-outlined text-2xl text-brand-primary ml-0.5">play_arrow</span>
+                        </div>
+                        <span>Процесс создания</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Contacts Section -->
+        <section class="max-w-7xl mx-auto px-6 py-12 mb-16 bg-white/40 border border-brand-border/30 rounded-xl" id="quick-contact">
+            <div class="text-center mb-8">
+                <h2 class="font-serif text-2xl md:text-3xl font-light text-brand-dark mb-2">Быстрая связь с кондитером</h2>
+                <p class="text-xs text-brand-secondary uppercase tracking-[0.2em]">выберите любой удобный способ связи</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 max-w-7xl mx-auto">
+                <a class="flex items-center gap-4 p-5 bg-white border border-brand-border/40 hover:border-brand-gold/60 rounded-lg hover:shadow-md transition-all duration-300 group" href="https://wa.me/79180899322" target="_blank">
+                    <div class="w-12 h-12 rounded-full border border-brand-primary/30 flex items-center justify-center bg-transparent text-brand-primary group-hover:bg-brand-primary group-hover:text-white transition-all duration-300 flex-shrink-0">
+                        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M17.4 14.5c-.3-.1-1.7-.8-2-1-.3-.1-.5-.1-.7.2-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.3-.4.1-.2 0-.4 0-.5C9.8 9 9.2 7.6 9 7c-.2-.6-.4-.5-.6-.5h-.5c-.2 0-.5.1-.8.4-.3.3-.9.9-.9 2.2s1 2.5 1.1 2.7c.1.2 1.9 2.9 4.6 4.1.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.7-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.2-.3-.3-.6-.4z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-brand-dark group-hover:text-brand-primary transition-colors">WhatsApp</h4>
+                        <p class="text-xs text-brand-secondary">Ответим в течение 10 минут</p>
+                    </div>
+                </a>
+                <a class="flex items-center gap-4 p-5 bg-white border border-brand-border/40 hover:border-brand-gold/60 rounded-lg hover:shadow-md transition-all duration-300 group" href="https://t.me/getmanenko_dessert" target="_blank">
+                    <div class="w-12 h-12 rounded-full border border-brand-primary/30 flex items-center justify-center bg-transparent text-brand-primary group-hover:bg-brand-primary group-hover:text-white transition-all duration-300 flex-shrink-0">
+                        <span class="material-symbols-outlined text-2xl">send</span>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-brand-dark group-hover:text-brand-primary transition-colors">Telegram</h4>
+                        <p class="text-xs text-brand-secondary">Личные сообщения</p>
+                    </div>
+                </a>
+                <a class="flex items-center gap-4 p-5 bg-white border border-brand-border/40 hover:border-brand-gold/60 rounded-lg hover:shadow-md transition-all duration-300 group" href="https://www.instagram.com/getmanenko_dessert/" target="_blank">
+                    <div class="w-12 h-12 rounded-full border border-brand-primary/30 flex items-center justify-center bg-transparent text-brand-primary group-hover:bg-brand-primary group-hover:text-white transition-all duration-300 flex-shrink-0">
+                        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <circle cx="17" cy="7" r="0.5" fill="currentColor"></circle>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-brand-dark group-hover:text-brand-primary transition-colors">Instagram</h4>
+                        <p class="text-xs text-brand-secondary">Свежие работы в профиле</p>
+                    </div>
+                </a>
+                <a class="flex items-center gap-4 p-5 bg-white border border-brand-border/40 hover:border-brand-gold/60 rounded-lg hover:shadow-md transition-all duration-300 group" href="https://max.ru/getmanenko_dessert" target="_blank">
+                    <div class="w-12 h-12 rounded-full border border-brand-primary/30 flex items-center justify-center bg-transparent text-brand-primary group-hover:bg-brand-primary group-hover:text-white transition-all duration-300 flex-shrink-0">
+                        <span class="material-symbols-outlined text-2xl">forum</span>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-brand-dark group-hover:text-brand-primary transition-colors">MAX</h4>
+                        <p class="text-xs text-brand-secondary">Написать в МАКС</p>
+                    </div>
+                </a>
+                <a class="flex items-center gap-4 p-5 bg-white border border-brand-border/40 hover:border-brand-gold/60 rounded-lg hover:shadow-md transition-all duration-300 group" href="tel:+79180899322">
+                    <div class="w-12 h-12 rounded-full border border-brand-primary/30 flex items-center justify-center bg-transparent text-brand-primary group-hover:bg-brand-primary group-hover:text-white transition-all duration-300 flex-shrink-0">
+                        <span class="material-symbols-outlined text-2xl">phone</span>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-brand-dark group-hover:text-brand-primary transition-colors">Позвонить</h4>
+                        <p class="text-xs text-brand-secondary">8 (918) 089-93-22</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section class="max-w-7xl mx-auto px-6 py-12 mb-20 relative overflow-hidden" id="gallery">
+            <!-- Pinterest-style background outline drawing -->
+            <div class="absolute right-10 top-[20%] w-64 h-64 pointer-events-none opacity-[0.04] dark:opacity-[0.02] text-brand-gold z-0 hidden lg:block">
+                <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.2">
+                    <rect x="25" y="45" width="50" height="10" rx="2" />
+                    <path d="M20 48 L25 48 L25 52 L20 52 Z" />
+                    <path d="M75 48 L80 48 L80 52 L75 52 Z" />
+                    <path d="M15 50 L20 50" stroke-width="2.5" />
+                    <path d="M80 50 L85 50" stroke-width="2.5" />
+                </svg>
+            </div>
+            
+            <div class="text-center mb-8 relative z-10">
+                <h2 class="font-serif text-3xl md:text-4xl font-light text-brand-dark mb-3">Галерея работ</h2>
+                <div class="w-12 h-[1px] bg-brand-gold mx-auto"></div>
+                
+            </div>
+
+            <!-- Gallery Filter Buttons -->
+            <div class="flex flex-wrap justify-center gap-2 mb-8 relative z-10" id="gallery-filters">
+                <button class="gallery-filter-btn px-4 py-2 rounded text-xs font-semibold uppercase tracking-wider bg-brand-primary text-white border border-brand-primary transition-all shadow-sm" data-category="all">Все работы</button>
+                <button class="gallery-filter-btn px-4 py-2 rounded text-xs font-semibold uppercase tracking-wider text-brand-secondary hover:text-brand-primary hover:bg-white border border-brand-border/60 transition-all" data-category="wedding">Свадебные торты</button>
+                <button class="gallery-filter-btn px-4 py-2 rounded text-xs font-semibold uppercase tracking-wider text-brand-secondary hover:text-brand-primary hover:bg-white border border-brand-border/60 transition-all" data-category="kids">Детские торты</button>
+                <button class="gallery-filter-btn px-4 py-2 rounded text-xs font-semibold uppercase tracking-wider text-brand-secondary hover:text-brand-primary hover:bg-white border border-brand-border/60 transition-all" data-category="festive">Праздничные / Тематические</button>
+            </div>
+            
+            <!-- Instagram Grid Wrapper -->
+            <div class="relative z-10 max-w-7xl mx-auto">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" id="gallery-grid">
+                    <!-- Gallery cards are dynamically rendered by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Catalog of Fillings (Начинки) -->
+        <section class="max-w-7xl mx-auto px-6 py-12 mb-20" id="fillings">
+            <div class="flex flex-col lg:flex-row gap-12 items-start">
+                
+                <!-- Left Sidebar Column -->
+                <div class="lg:w-1/4 lg:sticky lg:top-28 w-full">
+                    <h2 class="font-serif text-3xl md:text-4xl font-light text-brand-dark mb-4">Наши начинки</h2>
+                    <p class="text-sm text-brand-secondary leading-relaxed mb-6 font-light">
+                        Мы предлагаем 25 неповторимых сочетаний. Выберите любимые ингредиенты или воспользуйтесь быстрым поиском. Кликните на торт, чтобы рассмотреть разрез и прочитать подробный состав.
+                    </p>
+                    <div class="w-12 h-[1px] bg-brand-gold mb-8"></div>
+                    
+                    <!-- Categories Filtering -->
+                    <div class="flex flex-wrap lg:flex-col gap-2" id="category-filters">
+                        <button class="filter-btn text-left px-4 py-2 rounded text-sm font-semibold uppercase tracking-wider bg-brand-primary text-white transition-all w-full" data-category="all">
+                            Все вкусы (25)
+                        </button>
+                        <button class="filter-btn text-left px-4 py-2 rounded text-sm font-semibold uppercase tracking-wider text-brand-secondary hover:text-brand-primary hover:bg-white transition-all w-full" data-category="chocolate">
+                            Шоколад и карамель
+                        </button>
+                        <button class="filter-btn text-left px-4 py-2 rounded text-sm font-semibold uppercase tracking-wider text-brand-secondary hover:text-brand-primary hover:bg-white transition-all w-full" data-category="berry">
+                            Ягоды и фрукты
+                        </button>
+                        <button class="filter-btn text-left px-4 py-2 rounded text-sm font-semibold uppercase tracking-wider text-brand-secondary hover:text-brand-primary hover:bg-white transition-all w-full" data-category="mousse">
+                            Муссовые и нежные
+                        </button>
+                        <button class="filter-btn text-left px-4 py-2 rounded text-sm font-semibold uppercase tracking-wider text-brand-secondary hover:text-brand-primary hover:bg-white transition-all w-full" data-category="classic">
+                            Классические
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right Contents Column -->
+                <div class="lg:w-3/4 w-full">
+                    <!-- Search Bar -->
+                    <div class="mb-8 relative">
+                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-brand-secondary">search</span>
+                        <input type="text" id="search-input" placeholder="Поиск по ингредиенту или названию (например, малина, банан, маскарпоне)..." 
+                               class="w-full pl-12 pr-4 py-4 bg-white border border-brand-border/60 rounded-lg shadow-sm focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all text-sm"/>
+                    </div>
+                    
+                    <!-- Filling Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" id="fillings-grid">
+                        <!-- Cards are dynamically rendered by JavaScript -->
+                    </div>
+                    
+                    <!-- Empty State -->
+                    <div id="empty-state" class="hidden text-center py-16 bg-white/40 border border-dashed border-brand-border rounded-lg">
+                        <span class="material-symbols-outlined text-4xl text-brand-secondary mb-2">sentiment_dissatisfied</span>
+                        <h4 class="font-semibold text-brand-dark">Ничего не найдено</h4>
+                        <p class="text-sm text-brand-secondary mt-1">Попробуйте ввести другой ингредиент</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Desserts Section (Десерты) -->
+        <section class="max-w-7xl mx-auto px-6 py-12 mb-20 relative overflow-hidden" id="desserts">
+            <!-- Pinterest-style background outline drawing -->
+            <div class="absolute left-10 top-[15%] w-60 h-60 pointer-events-none opacity-[0.04] dark:opacity-[0.02] text-brand-gold z-0 hidden lg:block">
+                <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.2">
+                    <path d="M30 60 L70 60 L65 85 L35 85 Z" />
+                    <path d="M50 30 C35 30 30 50 30 60 L70 60 C70 50 65 30 50 30 Z" />
+                    <circle cx="50" cy="22" r="3" fill="currentColor" />
+                </svg>
+            </div>
+            
+            <div class="text-center mb-12 relative z-10">
+                <div class="flex items-center justify-center gap-3 mb-3">
+                    <h2 class="font-serif text-3xl md:text-4xl font-light text-brand-dark">Наш ассортимент десертов</h2>
+                    <!-- Admin Add Dessert Button -->
+                    <button id="admin-add-dessert-btn" onclick="openAddDessertModal()" class="hidden px-3 py-1.5 bg-brand-primary text-white text-[10px] font-semibold uppercase tracking-wider rounded hover:bg-brand-gold transition-colors flex items-center gap-1 shadow-sm">
+                        <span class="material-symbols-outlined text-sm">add</span> Добавить десерт
+                    </button>
+                </div>
+                <div class="w-12 h-[1px] bg-brand-gold mx-auto"></div>
+                <p class="text-sm text-brand-secondary mt-3 max-w-md mx-auto font-light font-sans">Изысканные авторские сладости, которые входят в наш постоянный ассортимент.</p>
+            </div>
+            
+            <!-- Desserts Grid -->
+            <div class="relative z-10 max-w-6xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="desserts-grid">
+                    <!-- Desserts are dynamically rendered here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="max-w-4xl mx-auto px-6 py-12 mb-20 reveal-item" id="faq">
+            <div class="text-center mb-12">
+                <h2 class="font-serif text-3xl md:text-4xl font-light text-brand-dark mb-3">Часто задаваемые вопросы</h2>
+                <div class="w-12 h-[1px] bg-brand-gold mx-auto"></div>
+                <p class="text-sm text-brand-secondary mt-3 max-w-md mx-auto font-light">Ответы на самые популярные вопросы о заказе, доставке и наших десертах</p>
+            </div>
+            
+            <div class="space-y-4 max-w-3xl mx-auto">
+                <!-- FAQ Item 1 -->
+                <div class="faq-item bg-white border border-brand-border/60 hover:border-brand-gold/40 rounded-xl transition-all duration-300">
+                    <button class="w-full flex items-center justify-between p-6 text-left focus:outline-none" onclick="toggleFaq(this)">
+                        <span class="font-serif text-lg md:text-xl font-medium text-brand-dark pr-4">За сколько дней нужно делать заказ?</span>
+                        <div class="w-8 h-8 rounded-full border border-brand-primary/20 flex items-center justify-center text-brand-primary transition-transform duration-300 faq-icon-wrapper">
+                            <span class="material-symbols-outlined text-xl transition-transform duration-300">add</span>
+                        </div>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="px-6 pb-6 pt-1 text-sm md:text-base text-brand-secondary font-light leading-relaxed">
+                            Мы рекомендуем делать заказ за <strong class="text-brand-primary font-medium">3–5 дней</strong> до желаемой даты. Для сложных, многоярусных или свадебных тортов желательно обращаться за <strong class="text-brand-primary font-medium">10–14 дней</strong>. Если торт нужен срочно — напишите нам в мессенджеры, мы постараемся предложить готовые варианты или экспресс-начинки.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="faq-item bg-white border border-brand-border/60 hover:border-brand-gold/40 rounded-xl transition-all duration-300">
+                    <button class="w-full flex items-center justify-between p-6 text-left focus:outline-none" onclick="toggleFaq(this)">
+                        <span class="font-serif text-lg md:text-xl font-medium text-brand-dark pr-4">Возможна ли доставка и сколько она стоит?</span>
+                        <div class="w-8 h-8 rounded-full border border-brand-primary/20 flex items-center justify-center text-brand-primary transition-transform duration-300 faq-icon-wrapper">
+                            <span class="material-symbols-outlined text-xl transition-transform duration-300">add</span>
+                        </div>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="px-6 pb-6 pt-1 text-sm md:text-base text-brand-secondary font-light leading-relaxed">
+                            Да, мы осуществляем бережную доставку по Тимашевску. Десерты транспортируются в специальных холодильных боксах, что гарантирует их свежесть и идеальный внешний вид. Стоимость доставки рассчитывается индивидуально в зависимости от адреса. Также доступен бесплатный самовывоз по адресу: <span class="text-brand-dark font-medium">ул. Пролетарская 16</span>.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="faq-item bg-white border border-brand-border/60 hover:border-brand-gold/40 rounded-xl transition-all duration-300">
+                    <button class="w-full flex items-center justify-between p-6 text-left focus:outline-none" onclick="toggleFaq(this)">
+                        <span class="font-serif text-lg md:text-xl font-medium text-brand-dark pr-4">Как правильно хранить торт и какой у него срок годности?</span>
+                        <div class="w-8 h-8 rounded-full border border-brand-primary/20 flex items-center justify-center text-brand-primary transition-transform duration-300 faq-icon-wrapper">
+                            <span class="material-symbols-outlined text-xl transition-transform duration-300">add</span>
+                        </div>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="px-6 pb-6 pt-1 text-sm md:text-base text-brand-secondary font-light leading-relaxed">
+                            Наши торты изготавливаются исключительно из натуральных ингредиентов (настоящие сливки, сыр маскарпоне, отборные ягоды) и не содержат искусственных консервантов. Срок годности составляет <strong class="text-brand-primary font-medium">72 часа</strong> с момента изготовления. Хранить торт необходимо строго в холодильнике при температуре от <span class="text-brand-dark font-medium">+2 до +6°C</span>.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="faq-item bg-white border border-brand-border/60 hover:border-brand-gold/40 rounded-xl transition-all duration-300">
+                    <button class="w-full flex items-center justify-between p-6 text-left focus:outline-none" onclick="toggleFaq(this)">
+                        <span class="font-serif text-lg md:text-xl font-medium text-brand-dark pr-4">Можно ли изменить декор или состав начинки под себя?</span>
+                        <div class="w-8 h-8 rounded-full border border-brand-primary/20 flex items-center justify-center text-brand-primary transition-transform duration-300 faq-icon-wrapper">
+                            <span class="material-symbols-outlined text-xl transition-transform duration-300">add</span>
+                        </div>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="px-6 pb-6 pt-1 text-sm md:text-base text-brand-secondary font-light leading-relaxed">
+                            Конечно! Мы с удовольствием адаптируем декор под тематику вашего праздника (цветовая гамма, надписи, топперы). Также мы можем обсудить небольшие изменения в составе начинок (например, убрать аллергенные орехи или заменить малину на клубнику). Обязательно сообщите обо всех пожеланиях и возможных аллергиях при связи с кондитером.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer & Contact Section -->
+    <footer class="w-full py-20 px-6 border-t border-brand-border/30 bg-[#f4f1ef]" id="contacts">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 items-start">
+            <div class="flex flex-col gap-5 md:col-span-4">
+                <a href="#hero" class="flex items-center gap-3">
+                    <img src="logo_desert.png" alt="GETMANENKO DESSERT" class="w-10 h-10 object-contain rounded-full border border-brand-gold/30 bg-white shadow-sm" />
+                    <div class="flex flex-col items-start">
+                        <span class="font-serif text-2xl font-semibold tracking-wider text-brand-primary leading-none">GETMANENKO</span>
+                        <span class="text-xs uppercase tracking-[0.3em] text-brand-secondary font-medium mt-0.5">DESSERT</span>
+                    </div>
+                </a>
+                <p class="text-sm text-brand-secondary font-light">г. Тимашевск, ул. Пролетарская 16.</p>
+                <a href="tel:+79180899322" class="text-lg font-bold text-brand-primary hover:text-brand-gold transition-colors">+7 (918) 089-93-22</a>
+                
+                <div class="flex gap-4 items-center mt-2">
+                    <a href="https://wa.me/79180899322" target="_blank" class="w-8 h-8 rounded-full border border-brand-primary/30 flex items-center justify-center text-brand-primary hover:bg-brand-primary hover:text-white transition-colors" title="WhatsApp">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M17.4 14.5c-.3-.1-1.7-.8-2-1-.3-.1-.5-.1-.7.2-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.3-.4.1-.2 0-.4 0-.5C9.8 9 9.2 7.6 9 7c-.2-.6-.4-.5-.6-.5h-.5c-.2 0-.5.1-.8.4-.3.3-.9.9-.9 2.2s1 2.5 1.1 2.7c.1.2 1.9 2.9 4.6 4.1.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.7-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.2-.3-.3-.6-.4z"/>
+                        </svg>
+                    </a>
+                    <a href="https://www.instagram.com/getmanenko_dessert/" target="_blank" class="w-8 h-8 rounded-full border border-brand-primary/30 flex items-center justify-center text-brand-primary hover:bg-brand-primary hover:text-white transition-colors" title="Instagram">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <circle cx="17" cy="7" r="0.5" fill="currentColor"></circle>
+                        </svg>
+                    </a>
+                    <a href="https://t.me/getmanenko_dessert" target="_blank" class="w-8 h-8 rounded-full border border-brand-primary/30 flex items-center justify-center text-brand-primary hover:bg-brand-primary hover:text-white transition-colors" title="Telegram Кондитер">
+                        <span class="material-symbols-outlined text-sm">send</span>
+                    </a>
+                    <a href="https://t.me/getmanenkodessert" target="_blank" class="w-8 h-8 rounded-full border border-brand-primary/30 flex items-center justify-center text-brand-primary hover:bg-brand-primary hover:text-white transition-colors" title="Telegram Канал">
+                        <span class="material-symbols-outlined text-sm">campaign</span>
+                    </a>
+                </div>
+                
+                <p class="text-xs text-brand-secondary/60 mt-4">© GETMANENKO DESSERT. Все права защищены.</p>
+            </div>
+            
+            <div class="flex flex-col gap-4 md:col-span-2">
+                <span class="text-xs font-semibold uppercase tracking-widest text-brand-secondary mb-2">Навигация</span>
+                <a class="text-sm text-brand-primary hover:text-brand-gold font-medium" href="#hero">Главная</a>
+                <a class="text-sm text-brand-primary hover:text-brand-gold font-medium" href="#gallery">Галерея</a>
+                <a class="text-sm text-brand-primary hover:text-brand-gold font-medium" href="#fillings">Начинки</a>
+                <a class="text-sm text-brand-primary hover:text-brand-gold font-medium" href="#desserts">Десерты</a>
+                <a class="text-sm text-brand-primary hover:text-brand-gold font-medium" href="#faq">FAQ</a>
+                <a class="text-sm text-brand-primary hover:text-brand-gold font-medium" href="#quick-contact">Связаться</a>
+                <a href="javascript:void(0)" onclick="openAdminLogin()" class="text-[10px] text-brand-secondary/40 hover:text-brand-primary font-semibold uppercase tracking-wider mt-4" id="admin-portal-link">Панель управления</a>
+                <a href="javascript:void(0)" onclick="logoutAdmin()" class="text-[10px] text-red-500/60 hover:text-red-500 font-semibold uppercase tracking-wider hidden" id="admin-logout-link">Выйти из админки</a>
+            </div>
+            
+            <div class="flex flex-col gap-4 md:col-span-6">
+                <span class="text-xs font-semibold uppercase tracking-widest text-brand-secondary mb-2">Сканируйте для связи</span>
+                <div class="flex flex-row flex-nowrap gap-4 overflow-x-auto md:overflow-visible">
+                    <div class="w-36 h-36 bg-white border border-brand-border flex items-center justify-center rounded-lg shadow-sm p-2 hover:shadow-md transition-shadow">
+                        <div class="text-center flex flex-col items-center justify-center h-full">
+                            <img class="w-24 h-24 object-contain" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://wa.me/79180899322" alt="WhatsApp QR" />
+                            <p class="text-[9px] uppercase tracking-wider text-brand-secondary font-semibold mt-2">WhatsApp чат</p>
+                        </div>
+                    </div>
+                    <div class="w-36 h-36 bg-white border border-brand-border flex items-center justify-center rounded-lg shadow-sm p-2 hover:shadow-md transition-shadow">
+                        <div class="text-center flex flex-col items-center justify-center h-full">
+                            <img class="w-24 h-24 object-contain" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.instagram.com/getmanenko_dessert/" alt="Instagram QR" />
+                            <p class="text-[9px] uppercase tracking-wider text-brand-secondary font-semibold mt-2">Наш Instagram</p>
+                        </div>
+                    </div>
+                    <div class="w-36 h-36 bg-white border border-brand-border flex items-center justify-center rounded-lg shadow-sm p-2 hover:shadow-md transition-shadow">
+                        <div class="text-center flex flex-col items-center justify-center h-full">
+                            <img class="w-24 h-24 object-contain" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://t.me/getmanenkodessert" alt="Telegram Channel QR" />
+                            <p class="text-[9px] uppercase tracking-wider text-brand-secondary font-semibold mt-2">Наш ТГ-канал</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Custom Modal for Details -->
+    <div id="filling-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-bg-cream max-w-3xl w-full rounded-2xl shadow-xl overflow-hidden border border-brand-border flex flex-col md:flex-row max-h-[90vh] scale-95 transition-transform duration-300" id="modal-container">
+            <!-- Modal Left Side (Vertical Image) -->
+            <div class="md:w-1/2 h-64 md:h-auto relative bg-neutral-900 flex items-center justify-center overflow-hidden">
+                <img id="modal-image" class="w-full h-full object-cover object-bottom" src="" alt="Разрез торта"/>
+            </div>
+            
+            <!-- Modal Right Side (Text) -->
+            <div class="md:w-1/2 p-6 md:p-8 flex flex-col justify-between overflow-y-auto">
+                <div class="relative h-full flex flex-col justify-between">
+                    <div>
+                        <button id="modal-close" class="absolute -top-2 -right-2 md:-top-2 md:-right-2 w-8 h-8 rounded-full bg-white border border-brand-border text-brand-dark flex items-center justify-center hover:bg-neutral-100 transition-colors shadow-sm">
+                            <span class="material-symbols-outlined text-lg">close</span>
+                        </button>
+                        
+                        <span id="modal-category" class="text-[10px] tracking-[0.25em] font-semibold text-brand-gold uppercase">Категория</span>
+                        <h3 id="modal-title" class="font-serif text-3xl font-light text-brand-dark mt-1 mb-4">Название начинки</h3>
+                        
+                        <div class="w-12 h-[1px] bg-brand-gold mb-6"></div>
+                        
+                        <h4 class="text-xs font-semibold uppercase tracking-wider text-brand-secondary mb-2">Состав и слои торта:</h4>
+                        <p id="modal-description" class="text-sm text-brand-dark leading-relaxed font-light whitespace-pre-line">
+                            Ингредиенты...
+                        </p>
+                    </div>
+                    
+                    <div class="mt-8 pt-4 border-t border-brand-border/60">
+                        <a href="#quick-contact" id="modal-choose-btn" class="block w-full py-3 bg-brand-primary hover:bg-brand-gold text-white font-semibold text-center uppercase tracking-wider text-xs rounded transition-colors duration-300">
+                            Связаться для заказа
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Video Modal -->
+    <div id="video-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
+        <div class="relative w-full max-w-4xl bg-black rounded-2xl overflow-hidden shadow-2xl border border-white/10 scale-95 transition-transform duration-300" id="video-modal-container">
+            <button onclick="closeVideoModal()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/50 border border-white/20 text-white flex items-center justify-center hover:bg-black/75 transition-colors shadow-lg z-50 focus:outline-none">
+                <span class="material-symbols-outlined text-2xl">close</span>
+            </button>
+            <div class="aspect-video w-full">
+                <iframe id="promo-video" class="w-full h-full" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gallery Lightbox Modal -->
+    <div id="gallery-lightbox" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
+        <button onclick="closeLightbox()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 border border-white/20 text-white flex items-center justify-center hover:bg-white/25 transition-colors shadow-lg z-50 focus:outline-none">
+            <span class="material-symbols-outlined text-2xl">close</span>
+        </button>
+        <button id="lightbox-prev" onclick="changeLightboxSlide(-1)" class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 border border-white/20 text-white flex items-center justify-center hover:bg-white/25 transition-colors z-50 focus:outline-none">
+            <span class="material-symbols-outlined text-3xl">chevron_left</span>
+        </button>
+        <button id="lightbox-next" onclick="changeLightboxSlide(1)" class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 border border-white/20 text-white flex items-center justify-center hover:bg-white/25 transition-colors z-50 focus:outline-none">
+            <span class="material-symbols-outlined text-3xl">chevron_right</span>
+        </button>
+        
+        <div class="max-w-4xl max-h-[85vh] flex flex-col items-center justify-center relative select-none">
+            <img id="lightbox-img" class="max-w-full max-h-[70vh] object-contain rounded shadow-2xl transition-transform duration-300" src="" alt="Gallery Image" />
+            <div class="text-center mt-4">
+                <span id="lightbox-tag" class="text-xs uppercase tracking-widest text-brand-light-gold font-semibold">Категория</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Modals -->
+    <!-- 1. Admin Login Modal -->
+    <div id="admin-login-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-bg-cream max-w-sm w-full rounded-2xl shadow-xl overflow-hidden border border-brand-border p-6 scale-95 transition-transform duration-300" id="login-modal-container">
+            <h3 class="font-serif text-2xl font-light text-brand-dark mb-4 text-center">Вход в панель управления</h3>
+            <div class="w-12 h-[1px] bg-brand-gold mx-auto mb-6"></div>
+            <div class="mb-4">
+                <label for="admin-password" class="block text-xs font-semibold uppercase tracking-wider text-brand-secondary mb-2">Пароль администратора</label>
+                <input type="password" id="admin-password" placeholder="Введите пароль (по умолчанию: admin)" class="w-full px-4 py-3 bg-white border border-brand-border/60 rounded-lg shadow-sm text-sm focus:outline-none focus:border-brand-primary" />
+            </div>
+            <div class="flex gap-3">
+                <button onclick="closeAdminLogin()" class="flex-1 py-3 border border-brand-border text-brand-secondary text-xs font-semibold uppercase tracking-wider rounded hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors">Отмена</button>
+                <button onclick="loginAdmin()" class="flex-1 py-3 bg-brand-primary text-white text-xs font-semibold uppercase tracking-wider rounded hover:bg-brand-gold transition-colors">Войти</button>
+            </div>
+            <p id="login-error" class="text-red-500 text-xs text-center mt-3 hidden">Неверный пароль!</p>
+        </div>
+    </div>
+
+    <!-- 2. Add/Edit Filling Modal -->
+    <div id="admin-add-filling-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-bg-cream max-w-lg w-full rounded-2xl shadow-xl overflow-hidden border border-brand-border p-6 md:p-8 scale-95 transition-transform duration-300 max-h-[90vh] overflow-y-auto" id="add-filling-modal-container">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="font-serif text-2xl font-light text-brand-dark" id="filling-modal-title-text">Добавить новую начинку</h3>
+                <button onclick="closeAddFillingModal()" class="w-8 h-8 rounded-full border border-brand-border flex items-center justify-center hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors">
+                    <span class="material-symbols-outlined text-lg">close</span>
+                </button>
+            </div>
+            <div class="w-12 h-[1px] bg-brand-gold mb-6"></div>
+            
+            <form id="filling-form" onsubmit="saveFillingForm(event)" class="space-y-4">
+                <input type="hidden" id="filling-edit-id" value="" />
+                
+                <div>
+                    <label for="filling-title-input" class="block text-xs font-semibold uppercase tracking-wider text-brand-secondary mb-1">Название начинки</label>
+                    <input type="text" id="filling-title-input" required placeholder="Например: Малиновый вельвет" class="w-full px-4 py-2 bg-white border border-brand-border/60 rounded-lg text-sm focus:outline-none focus:border-brand-primary" />
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="filling-category-select" class="block text-xs font-semibold uppercase tracking-wider text-brand-secondary mb-1">Категория</label>
+                        <select id="filling-category-select" required class="w-full px-4 py-2 bg-white border border-brand-border/60 rounded-lg text-sm focus:outline-none focus:border-brand-primary">
+                            <option value="mousse">Муссовые и нежные</option>
+                            <option value="chocolate">Шоколад и карамель</option>
+                            <option value="berry">Ягоды и фрукты</option>
+                            <option value="classic">Классические</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="filling-tags-input" class="block text-xs font-semibold uppercase tracking-wider text-brand-secondary mb-1">Теги (через запятую)</label>
+                        <input type="text" id="filling-tags-input" placeholder="ягоды, нежный, премиум" class="w-full px-4 py-2 bg-white border border-brand-border/60 rounded-lg text-sm focus:outline-none focus:border-brand-primary" />
+                    </div>
+                </div>
+                
+                <div>
+                    <label for="filling-ingredients-textarea" class="block text-xs font-semibold uppercase tracking-wider text-brand-secondary mb-1">Состав и слои торта (каждый пункт с новой строки)</label>
+                    <textarea id="filling-ingredients-textarea" rows="4" required placeholder="• Шоколадные бисквиты&#10;• Малиновое конфи&#10;• Нежный крем-чиз" class="w-full px-4 py-2 bg-white border border-brand-border/60 rounded-lg text-sm focus:outline-none focus:border-brand-primary"></textarea>
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="filling-image-input" class="block text-xs font-semibold uppercase tracking-wider text-brand-secondary mb-1">Ссылка на фото (или шаблон)</label>
+                        <input type="text" id="filling-image-input" placeholder="fillings/your_photo.jpg или https://..." class="w-full px-4 py-2 bg-white border border-brand-border/60 rounded-lg text-sm focus:outline-none focus:border-brand-primary" />
+                    </div>
+                    <div>
+                        <label for="filling-image-file" class="block text-xs font-semibold uppercase tracking-wider text-brand-secondary mb-1">Или загрузить файл</label>
+                        <input type="file" id="filling-image-file" accept="image/*" class="w-full text-xs text-brand-secondary file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-brand-primary/10 file:text-brand-primary hover:file:bg-brand-primary/20" />
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-[10px] font-semibold uppercase tracking-wider text-brand-secondary mb-2">Быстрый шаблон фото тортов в разрезе:</label>
+                    <div class="grid grid-cols-4 gap-2 max-h-24 overflow-y-auto p-1 border border-brand-border/40 rounded-lg bg-white/40" id="filling-template-images">
+                        <!-- Filled by JS with existing filling pictures -->
+                    </div>
+                </div>
+                
+                <div class="pt-4 border-t border-brand-border/40 flex justify-end gap-3">
+                    <button type="button" onclick="closeAddFillingModal()" class="px-5 py-2 border border-brand-border text-brand-secondary text-xs font-semibold uppercase tracking-wider rounded hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors">Отмена</button>
+                    <button type="submit" class="px-5 py-2 bg-brand-primary text-white text-xs font-semibold uppercase tracking-wider rounded hover:bg-brand-gold transition-colors">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 3. Add/Edit Dessert Modal -->
+    <div id="admin-add-dessert-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-bg-cream max-w-lg w-full rounded-2xl shadow-xl overflow-hidden border border-brand-border p-6 md:p-8 scale-95 transition-transform duration-300 max-h-[90vh] overflow-y-auto" id="add-dessert-modal-container">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="font-serif text-2xl font-light text-brand-dark" id="dessert-modal-title-text">Добавить новый десерт</h3>
+                <button onclick="closeAddDessertModal()" class="w-8 h-8 rounded-full border border-brand-border flex items-center justify-center hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors">
+                    <span class="material-symbols-outlined text-lg">close</span>
+                </button>
+            </div>
+            <div class="w-12 h-[1px] bg-brand-gold mb-6"></div>
+            
+            <form id="dessert-form" onsubmit="saveDessertForm(event)" class="space-y-4">
+                <input type="hidden" id="dessert-edit-id" value="" />
+                
+                <div>
+                    <label for="dessert-title-input" class="block text-xs font-semibold uppercase tracking-wider text-brand-secondary mb-1">Название десерта</label>
+                    <input type="text" id="dessert-title-input" required placeholder="Например: Сырный пирог с грушей" class="w-full px-4 py-2 bg-white border border-brand-border/60 rounded-lg text-sm focus:outline-none focus:border-brand-primary" />
+                </div>
+                
+                <div>
+                    <label for="dessert-description-textarea" class="block text-xs font-semibold uppercase tracking-wider text-brand-secondary mb-1">Краткое описание (для витрины)</label>
+                    <textarea id="dessert-description-textarea" rows="2" required placeholder="Фирменный нежнейший сливочно-сырный чизкейк на песочной подложке..." class="w-full px-4 py-2 bg-white border border-brand-border/60 rounded-lg text-sm focus:outline-none focus:border-brand-primary"></textarea>
+                </div>
+
+                <div>
+                    <label for="dessert-ingredients-textarea" class="block text-xs font-semibold uppercase tracking-wider text-brand-secondary mb-1">Состав и ингредиенты (каждый пункт с новой строки)</label>
+                    <textarea id="dessert-ingredients-textarea" rows="3" required placeholder="• Нежная сырно-сливочная основа&#10;• Томлёная груша со специями&#10;• Песочный корж" class="w-full px-4 py-2 bg-white border border-brand-border/60 rounded-lg text-sm focus:outline-none focus:border-brand-primary"></textarea>
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="dessert-image-whole-input" class="block text-xs font-semibold uppercase tracking-wider text-brand-secondary mb-1">Фото целиком (ссылка)</label>
+                        <input type="text" id="dessert-image-whole-input" placeholder="Ссылка на фото или fillings/..." class="w-full px-4 py-2 bg-white border border-brand-border/60 rounded-lg text-sm focus:outline-none focus:border-brand-primary" />
+                        <input type="file" id="dessert-image-whole-file" accept="image/*" class="w-full text-xs text-brand-secondary mt-1 file:mr-4 file:py-1 file:px-2 file:rounded file:border-0 file:text-[10px] file:font-semibold file:bg-brand-primary/10 file:text-brand-primary" />
+                    </div>
+                    <div>
+                        <label for="dessert-image-slice-input" class="block text-xs font-semibold uppercase tracking-wider text-brand-secondary mb-1">Фото в разрезе (ссылка)</label>
+                        <input type="text" id="dessert-image-slice-input" placeholder="Ссылка на фото или fillings/..." class="w-full px-4 py-2 bg-white border border-brand-border/60 rounded-lg text-sm focus:outline-none focus:border-brand-primary" />
+                        <input type="file" id="dessert-image-slice-file" accept="image/*" class="w-full text-xs text-brand-secondary mt-1 file:mr-4 file:py-1 file:px-2 file:rounded file:border-0 file:text-[10px] file:font-semibold file:bg-brand-primary/10 file:text-brand-primary" />
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-[10px] font-semibold uppercase tracking-wider text-brand-secondary mb-2">Быстрый шаблон фото десертов (целиком и в разрезе):</label>
+                    <div class="grid grid-cols-2 gap-3 p-2 border border-brand-border/40 rounded-lg bg-white/40" id="dessert-template-images">
+                        <button type="button" onclick="selectDessertPhotoTemplate('fillings/pear_cheesecake_whole.png', 'fillings/pear_cheesecake_slice.png')" class="flex items-center gap-2 p-1.5 border border-brand-border/40 hover:border-brand-gold rounded text-left transition-colors bg-white">
+                            <img src="fillings/pear_cheesecake_whole.png" class="w-8 h-8 object-cover rounded" />
+                            <img src="fillings/pear_cheesecake_slice.png" class="w-8 h-8 object-cover rounded" />
+                            <span class="text-[9px] uppercase tracking-wider text-brand-secondary font-semibold font-sans">Шаблон: Пирог с грушей</span>
+                        </button>
+                        <button type="button" onclick="selectDessertPhotoTemplate('https://images.unsplash.com/photo-1550617931-e17a7b70dce2?q=80&w=600', 'https://images.unsplash.com/photo-1519340333755-56e9c1d04579?q=80&w=600')" class="flex items-center gap-2 p-1.5 border border-brand-border/40 hover:border-brand-gold rounded text-left transition-colors bg-white">
+                            <img src="https://images.unsplash.com/photo-1550617931-e17a7b70dce2?q=80&w=600" class="w-8 h-8 object-cover rounded" />
+                            <img src="https://images.unsplash.com/photo-1519340333755-56e9c1d04579?q=80&w=600" class="w-8 h-8 object-cover rounded" />
+                            <span class="text-[9px] uppercase tracking-wider text-brand-secondary font-semibold font-sans">Шаблон: Капкейки / Торт</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="pt-4 border-t border-brand-border/40 flex justify-end gap-3">
+                    <button type="button" onclick="closeAddDessertModal()" class="px-5 py-2 border border-brand-border text-brand-secondary text-xs font-semibold uppercase tracking-wider rounded hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors">Отмена</button>
+                    <button type="submit" class="px-5 py-2 bg-brand-primary text-white text-xs font-semibold uppercase tracking-wider rounded hover:bg-brand-gold transition-colors">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+        <!-- 4. Add/Edit Gallery Item Modal -->
+    <div id="admin-add-gallery-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-bg-cream max-w-lg w-full rounded-2xl shadow-xl overflow-hidden border border-brand-border p-6 md:p-8 scale-95 transition-transform duration-300 max-h-[90vh] overflow-y-auto" id="add-gallery-modal-container">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="font-serif text-2xl font-light text-brand-dark" id="gallery-modal-title-text">Добавить новую работу</h3>
+                <button onclick="closeAddGalleryModal()" class="w-8 h-8 rounded-full border border-brand-border flex items-center justify-center hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors">
+                    <span class="material-symbols-outlined text-lg">close</span>
+                </button>
+            </div>
+            <div class="w-12 h-[1px] bg-brand-gold mb-6"></div>
+            
+            <form id="gallery-form" onsubmit="saveGalleryForm(event)" class="space-y-4">
+                <input type="hidden" id="gallery-edit-id" value="" />
+                
+                <div>
+                    <label for="gallery-title-input" class="block text-xs font-semibold uppercase tracking-wider text-brand-secondary mb-1">Название работы</label>
+                    <input type="text" id="gallery-title-input" required placeholder="Например: Нежный торт с клубникой" class="w-full px-4 py-2 bg-white border border-brand-border/60 rounded-lg text-sm focus:outline-none focus:border-brand-primary" />
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="gallery-category-select" class="block text-xs font-semibold uppercase tracking-wider text-brand-secondary mb-1">Категория</label>
+                        <select id="gallery-category-select" required class="w-full px-4 py-2 bg-white border border-brand-border/60 rounded-lg text-sm focus:outline-none focus:border-brand-primary">
+                            <option value="wedding">Свадебные торты</option>
+                            <option value="kids">Детские торты</option>
+                            <option value="festive">Праздничные / Тематические</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="gallery-tag-input" class="block text-xs font-semibold uppercase tracking-wider text-brand-secondary mb-1">Тег / Подзаголовок</label>
+                        <input type="text" id="gallery-tag-input" required placeholder="Например: Свадебный торт" class="w-full px-4 py-2 bg-white border border-brand-border/60 rounded-lg text-sm focus:outline-none focus:border-brand-primary" />
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="gallery-image-input" class="block text-xs font-semibold uppercase tracking-wider text-brand-secondary mb-1">Ссылка на фото (или шаблон)</label>
+                        <input type="text" id="gallery-image-input" placeholder="tort/wedding/..." class="w-full px-4 py-2 bg-white border border-brand-border/60 rounded-lg text-sm focus:outline-none focus:border-brand-primary" />
+                    </div>
+                    <div>
+                        <label for="gallery-image-file" class="block text-xs font-semibold uppercase tracking-wider text-brand-secondary mb-1">Или загрузить файл</label>
+                        <input type="file" id="gallery-image-file" accept="image/*" class="w-full text-xs text-brand-secondary file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-brand-primary/10 file:text-brand-primary hover:file:bg-brand-primary/20" />
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-[10px] font-semibold uppercase tracking-wider text-brand-secondary mb-2">Быстрый шаблон фото из существующих:</label>
+                    <div class="grid grid-cols-4 gap-2 max-h-32 overflow-y-auto p-1 border border-brand-border/40 rounded-lg bg-white/40" id="gallery-template-images">
+                        <!-- Filled by JS with default gallery pictures -->
+                    </div>
+                </div>
+                
+                <div class="pt-4 border-t border-brand-border/40 flex justify-end gap-3">
+                    <button type="button" onclick="closeAddGalleryModal()" class="px-5 py-2 border border-brand-border text-brand-secondary text-xs font-semibold uppercase tracking-wider rounded hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors">Отмена</button>
+                    <button type="submit" class="px-5 py-2 bg-brand-primary text-white text-xs font-semibold uppercase tracking-wider rounded hover:bg-brand-gold transition-colors">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Data & Scripts -->
+    <script>
+        // Centralized Modal Manager
+        const ModalManager = {
+            open(modalId, containerId = null, callback = null) {
+                const modal = document.getElementById(modalId);
+                if (!modal) return;
+                
+                modal.classList.remove("hidden");
+                // Force layout recalculation
+                modal.offsetHeight;
+                
+                setTimeout(() => {
+                    modal.classList.remove("opacity-0");
+                    if (containerId) {
+                        const container = document.getElementById(containerId);
+                        if (container) container.classList.remove("scale-95");
+                    }
+                    if (callback) callback();
+                }, 10);
+            },
+            
+            close(modalId, containerId = null, callback = null) {
+                const modal = document.getElementById(modalId);
+                if (!modal) return;
+                
+                modal.classList.add("opacity-0");
+                if (containerId) {
+                    const container = document.getElementById(containerId);
+                    if (container) container.classList.add("scale-95");
+                }
+                
+                setTimeout(() => {
+                    modal.classList.add("hidden");
+                    if (callback) callback();
+                }, 300);
+            },
+            
+            setupOverlayClose(modalId, closeFn) {
+                const modal = document.getElementById(modalId);
+                if (!modal) return;
+                modal.addEventListener("click", (e) => {
+                    if (e.target === modal) closeFn();
+                });
+            }
+        };
+
+        // Default data for 25 optimized fillings matching ТЗ
+        const defaultFillingsData = [
+            {
+                id: 1,
+                title: "Йогуртовый",
+                category: "mousse",
+                tags: ["легкий", "ягодный", "мусс"],
+                image: "fillings/552423037_17941112765992019_7674789079820265346_n.jpg",
+                ingredients: `• Ягодные бисквиты
+• Йогуртовый крем
+• Ассорти фруктов на выбор`
+            },
+            {
+                id: 2,
+                title: "Молочная девочка",
+                category: "mousse",
+                tags: ["нежный", "сгущенка", "ягоды"],
+                image: "fillings/556401212_17968312538950918_2976561779875514890_n.jpg",
+                ingredients: `• Коржи на основе сгущенного молока
+• Натуральные взбитые сливки
+• Любые фрукты и ягоды на выбор`
+            },
+            {
+                id: 3,
+                title: "Фисташка",
+                category: "berry",
+                tags: ["премиум", "ягодный", "ореховый"],
+                image: "fillings/556934357_18028826783738782_4818010884080364736_n.jpg",
+                ingredients: `• Фисташковые бисквиты
+• Фисташковый ганаш
+• Малиновые конфи (можно заменить на клубнику)
+• Сырный крем`
+            },
+            {
+                id: 4,
+                title: "Морковный",
+                category: "classic",
+                tags: ["пряный", "ореховый", "карамель"],
+                image: "fillings/557683175_18041764424680341_7245595423119227477_n.jpg",
+                ingredients: `• Влажные морковные бисквиты с корицей, грецким орехом и апельсином
+• Крем чиз
+• Солёная карамель`
+            },
+            {
+                id: 5,
+                title: "Тутти-Фрутти",
+                category: "berry",
+                tags: ["фруктовый", "кислый", "яркий"],
+                image: "fillings/559882181_18064634816377321_3313298692119358547_n.jpg",
+                ingredients: `• Банановые бисквиты
+• Черно-смородиновый крем
+• Банановый мусс
+• Чёрная смородина
+• Карамель-ириска
+• Лимонная пропитка`
+            },
+            {
+                id: 6,
+                title: "Сливочная груша",
+                category: "classic",
+                tags: ["миндаль", "груша", "нежный"],
+                image: "fillings/560445196_18048357326338762_1745728502382167781_n.jpg",
+                ingredients: `• Миндальные бисквиты
+• Карамель
+• Хрустящий слой
+• Ванильный крем
+• Томлёная груша со специями`
+            },
+            {
+                id: 7,
+                title: "Медовик или Рыжик",
+                category: "classic",
+                tags: ["мед", "классический", "сытный"],
+                image: "fillings/561080982_18066117290458503_1957063833033489274_n.jpg",
+                ingredients: `• Медовые коржи
+• Сметанный крем
+• По желанию: орешки, сухофрукты, фруктово-ягодные прослойки`
+            },
+            {
+                id: 8,
+                title: "Манго \\ Малина",
+                category: "berry",
+                tags: ["экзотика", "ягоды", "легкий"],
+                image: "fillings/562572482_18069571712522475_7088319213640696684_n.jpg",
+                ingredients: `• Бисквиты с пюре манго
+• Мусс манго
+• Мусс малина
+• Малиновое конфи
+• Малиновый крем`
+            },
+            {
+                id: 9,
+                title: "Ферреро",
+                category: "chocolate",
+                tags: ["шоколад", "фундук", "насыщенный"],
+                image: "fillings/562968009_18095511016827189_5283236467276931067_n.jpg",
+                ingredients: `• Бисквиты Брауни
+• Хрустяшка с фундуком
+• Пропитка с Ирландским кремом
+• Паста шоколадная, ореховая`
+            },
+            {
+                id: 10,
+                title: "Банан \\ Чизкейк",
+                category: "mousse",
+                tags: ["чизкейк", "сытный", "банан"],
+                image: "fillings/563608812_18080836430083708_4924181676497370919_n.jpg",
+                ingredients: `• Банановый бисквит с корицей
+• Сырный крем
+• Карамельный чизкейк
+• Жареный банан`
+            },
+            {
+                id: 11,
+                title: "Киви \\ Клубника",
+                category: "berry",
+                tags: ["освежающий", "клубника", "киви"],
+                image: "fillings/563610982_17987375435897670_8575928560328128160_n.jpg",
+                ingredients: `• Шифоновый бисквит
+• Сырный крем
+• Клубничный мусс
+• Намелака киви с томлёной клубникой`
+            },
+            {
+                id: 12,
+                title: "Рафаэлло",
+                category: "mousse",
+                tags: ["кокос", "миндаль", "нежный"],
+                image: "fillings/564707288_18084499735938275_7533202536817169626_n.jpg",
+                ingredients: `• Кокосовые бисквиты
+• Кокосовый крем
+• Кокосовая намелака
+• Хрустящий слой с миндалем`
+            },
+            {
+                id: 13,
+                title: "Красный бархат",
+                category: "classic",
+                tags: ["маскарпоне", "вишня", "классика"],
+                image: "fillings/565102196_18005246600652908_1968800451283336054_n.jpg",
+                ingredients: `• Влажные коржи
+• Крем на основе сыра маскарпоне
+• Томлёная вишенка (начинка на выбор: малина, клубника, карамель)`
+            },
+            {
+                id: 14,
+                title: "Трюфельный",
+                category: "chocolate",
+                tags: ["темный шоколад", "насыщенный"],
+                image: "fillings/565235692_18082259713991449_5828748182656856179_n.jpg",
+                ingredients: `• Бисквиты влажные на тёмном шоколаде
+• Шоколадный крем`
+            },
+            {
+                id: 15,
+                title: "Банан \\ Шоколад",
+                category: "chocolate",
+                tags: ["банан", "карамель", "шоколад"],
+                image: "fillings/565562239_18091075228863329_3813301334630872475_n.jpg",
+                ingredients: `• Шоколадные бисквиты
+• Шоколадный крем
+• Солёная карамель
+• Карамелизованные бананы`
+            },
+            {
+                id: 16,
+                title: "Шоколад \\ Мята \\ Голубика",
+                category: "chocolate",
+                tags: ["мята", "голубика", "шоколад"],
+                image: "fillings/567209461_18060584366395256_6494198326167165527_n.jpg",
+                ingredients: `• Шоколадные бисквиты
+• Голубика
+• Мятный крем
+• Шоколадный крем`
+            },
+            {
+                id: 17,
+                title: "Сникерс",
+                category: "chocolate",
+                tags: ["мусс", "арахис", "карамель"],
+                image: "fillings/580608680_18059458112558027_522593352407942227_n.jpg",
+                ingredients: `• Шоколадные бисквиты
+• Крем Чиз
+• Шоколадный мусс
+• Солёная карамель
+• Арахис`
+            },
+            {
+                id: 18,
+                title: "Экзотика в шоколаде",
+                category: "chocolate",
+                tags: ["манго", "маракуйя", "шоколад"],
+                image: "fillings/570525097_18143340247441011_6781084110660830383_n.jpg",
+                ingredients: `• Шоколадные бисквиты
+• Солёная карамель
+• Крем - Чиз
+• Намелака манго \\ маракуйя`
+            },
+            {
+                id: 19,
+                title: "Max Fun",
+                category: "chocolate",
+                tags: ["взрывная карамель", "попкорн", "шоколад"],
+                image: "fillings/571464546_18086191831749852_2503264481707590690_n.jpg",
+                ingredients: `• Шоколадный бисквит
+• Сливочный бисквит
+• Карамель
+• Шоколадный ганаш
+• Сливочный крем
+• Карамельный мусс
+• Попкорн
+• Взрывная карамель`
+            },
+            {
+                id: 20,
+                title: "Баблгам",
+                category: "mousse",
+                tags: ["детский", "клубника", "банан"],
+                image: "fillings/574497165_18064772894128013_8879044245159385017_n.jpg",
+                ingredients: `• Клубничные бисквиты
+• Пропитка сиропом Bubblegum
+• Банановый мусс
+• Клубничный мусс
+• Сырный крем`
+            },
+            {
+                id: 21,
+                title: "Тирамису",
+                category: "classic",
+                tags: ["кофе", "маскарпоне", "шоколад"],
+                image: "fillings/579686052_18085844443982326_8110132117194187182_n.jpg",
+                ingredients: `• Ванильные бисквиты
+• Крем на основе сыра маскарпоне
+• Кофейная пропитка
+• Муссовая прослойка на молочном шоколаде
+• Шоколадный ганаш`
+            },
+            {
+                id: 22,
+                title: "Баунти",
+                category: "chocolate",
+                tags: ["кокос", "лайм", "молочный шоколад"],
+                image: "fillings/581751937_18535609618044751_5546123104584770279_n.jpg",
+                ingredients: `• Кокосовые бисквиты
+• Пропитка кокос \\ лайм
+• Кокосовый крем
+• Ганаш на молочном шоколаде и кокосе`
+            },
+            {
+                id: 23,
+                title: "Орио \\ Чизкейк \\ Карамель",
+                category: "chocolate",
+                tags: ["орео", "чизкейк", "карамель"],
+                image: "fillings/581800418_18104776438572819_5200744888083220014_n.jpg",
+                ingredients: `• Влажный шоколадный бисквит
+• Сырный крем
+• Чизкейк с печеньем орео
+• Солёная карамель`
+            },
+            {
+                id: 24,
+                title: "Маракеш",
+                category: "classic",
+                tags: ["мак", "черника", "карамель", "кешью"],
+                image: "fillings/582090486_18542840674012019_5014486604709308499_n.jpg",
+                ingredients: `• Маковые бисквиты
+• Черничное кремлю
+• Черничный мармелад
+• Солёная карамель
+• Кешью
+• Сырный крем`
+            },
+            {
+                id: 25,
+                title: "Мак \\ Лимон \\ Черника",
+                category: "berry",
+                tags: ["лимонный курд", "черника", "безе"],
+                image: "fillings/584400305_18067577486100095_5295898764504283342_n.jpg",
+                ingredients: `• Маковые бисквиты
+• Лимонный курд
+• Черничная намелака
+• Черничный крем
+• Безе
+• Лимонная пропитка`
+            }
+        ];
+
+        // Default data for signature desserts
+        const defaultDessertsData = [
+            {
+                id: 1,
+                title: "Сырный пирог с грушей",
+                description: `Фирменный нежнейший сливочно-сырный чизкейк на песочной подложке, украшенный веером из слайсов томлёной в карамели спелой груши с пряной корицей и ноткой ванили.`,
+                imageWhole: "fillings/pear_cheesecake_whole.png",
+                imageSlice: "fillings/pear_cheesecake_slice.png",
+                ingredients: `• Песочная основа
+• Нежный сливочно-сырный мусс
+• Спелая томлёная груша
+• Пряный карамельный сироп с корицей
+• Ванильный экстракт`
+            }
+        ];
+
+        // Default data for 27 gallery items
+        const defaultGalleryItems = [
+            // Wedding Category (Свадебные торты)
+            { id: 1, image: "tort/wedding/photo_1_2026-07-05_13-22-09.jpg", tag: "Свадебный торт", title: "Трехъярусный с живыми цветами", category: "wedding" },
+            { id: 2, image: "tort/wedding/photo_2_2026-07-05_13-22-09.jpg", tag: "Свадебный торт", title: "Минималистичный свадебный торт", category: "wedding" },
+            { id: 3, image: "tort/wedding/photo_3_2026-07-05_13-22-09.jpg", tag: "Свадебный торт", title: "Элегантный белый с текстурой", category: "wedding" },
+            { id: 4, image: "tort/wedding/photo_4_2026-07-05_13-22-09.jpg", tag: "Свадебный торт", title: "Свадебный торт в стиле Рустик", category: "wedding" },
+            { id: 5, image: "tort/wedding/photo_5_2026-07-05_13-22-09.jpg", tag: "Свадебный торт", title: "Классический торт с жемчугом", category: "wedding" },
+            
+            // Kids Category (Детские торты)
+            { id: 6, image: "tort/kids/photo_1_2026-07-05_13-20-38.jpg", tag: "Детский торт", title: "Нежный торт с мишкой и шарами", category: "kids" },
+            { id: 7, image: "tort/kids/photo_2_2026-07-05_13-20-38.jpg", tag: "Детский торт", title: "Яркий детский торт с леденцами", category: "kids" },
+            { id: 8, image: "tort/kids/photo_3_2026-07-05_13-20-38.jpg", tag: "Детский торт", title: "Веселый торт с динозавриками", category: "kids" },
+            { id: 9, image: "tort/kids/photo_4_2026-07-05_13-20-38.jpg", tag: "Детский торт", title: "Милый розовый торт для девочки", category: "kids" },
+            { id: 10, image: "tort/kids/photo_5_2026-07-05_13-20-38.jpg", tag: "Детский торт", title: "Космический торт для мальчика", category: "kids" },
+            { id: 11, image: "tort/kids/photo_6_2026-07-05_13-20-38.jpg", tag: "Детский торт", title: "Детский торт с единорогом", category: "kids" },
+            { id: 12, image: "tort/kids/photo_7_2026-07-05_13-20-38.jpg", tag: "Детский торт", title: "Праздничный детский торт с ягодами", category: "kids" },
+            { id: 13, image: "tort/kids/photo_8_2026-07-05_13-20-38.jpg", tag: "Детский торт", title: "Торт с мультяшными фигурками", category: "kids" },
+            
+            // Festive / Themed Category (Праздничные / Тематические торты)
+            // Bento:
+            { id: 14, image: "tort/bento/photo_1_2026-07-05_13-19-47.jpg", tag: "Бенто-торт", title: "Бенто-торт с милой надписью", category: "festive" },
+            { id: 15, image: "tort/bento/photo_2_2026-07-05_13-19-47.jpg", tag: "Бенто-торт", title: "Бенто с рисунком", category: "festive" },
+            { id: 16, image: "tort/bento/photo_3_2026-07-05_13-19-47.jpg", tag: "Бенто-торт", title: "Праздничный бенто с посыпкой", category: "festive" },
+            { id: 17, image: "tort/bento/photo_4_2026-07-05_13-19-47.jpg", tag: "Бенто-торт", title: "Шоколадный бенто с кремом", category: "festive" },
+            { id: 18, image: "tort/bento/photo_5_2026-07-05_13-19-47.jpg", tag: "Бенто-торт", title: "Бенто с кремовым сердцем", category: "festive" },
+            // Berries:
+            { id: 19, image: "tort/berries/photo_1_2026-07-05_13-24-28.jpg", tag: "Ягодный декор", title: "Торт со свежими ягодами и инжиром", category: "festive" },
+            { id: 20, image: "tort/berries/photo_2_2026-07-05_13-24-28.jpg", tag: "Ягодный декор", title: "Торт с веночком из клубники", category: "festive" },
+            { id: 21, image: "tort/berries/photo_3_2026-07-05_13-24-28.jpg", tag: "Ягодный декор", title: "Торт с клубникой и голубикой", category: "festive" },
+            // Men:
+            { id: 22, image: "tort/men/photo_1_2026-07-05_13-23-49.jpg", tag: "Мужской торт", title: "Стильный черный торт для мужчины", category: "festive" },
+            { id: 23, image: "tort/men/photo_2_2026-07-05_13-23-49.jpg", tag: "Мужской торт", title: "Мужской торт с декором", category: "festive" },
+            { id: 24, image: "tort/men/photo_3_2026-07-05_13-23-49.jpg", tag: "Мужской торт", title: "Шоколадный торт с бутылочкой", category: "festive" },
+            // Women (woomen):
+            { id: 25, image: "tort/woomen/photo_1_2026-07-05_13-22-38.jpg", tag: "Женский торт", title: "Нежный торт с вафельным цветком", category: "festive" },
+            { id: 26, image: "tort/woomen/photo_2_2026-07-05_13-22-38.jpg", tag: "Женский торт", title: "Торт в пастельных тонах для девушки", category: "festive" },
+            { id: 27, image: "tort/woomen/photo_3_2026-07-05_13-22-38.jpg", tag: "Женский торт", title: "Элегантный торт с кремовыми розами", category: "festive" }
+        ];
+
+        // State variables loading from localStorage
+        let fillingsData = JSON.parse(localStorage.getItem("fillingsData_v2")) || defaultFillingsData;
+        let dessertsData = JSON.parse(localStorage.getItem("dessertsData")) || defaultDessertsData;
+        let galleryItems = JSON.parse(localStorage.getItem("galleryItems_v2")) || defaultGalleryItems;
+
+        // Firebase Cloud CMS Configuration (Optional)
+        // To save changes permanently on a free hosting (like Netlify or GitHub Pages),
+        // register a free project on Firebase Console, enable Firestore and Storage, and paste your config here:
+        const firebaseConfig = {
+            apiKey: "",
+            authDomain: "",
+            projectId: "",
+            storageBucket: "",
+            messagingSenderId: "",
+            appId: ""
+        };
+
+        let db = null;
+        let storage = null;
+
+        function isFirebaseActive() {
+            return firebaseConfig && firebaseConfig.apiKey && firebaseConfig.apiKey !== "";
+        }
+
+        // Initialize Firebase if config is provided
+        if (isFirebaseActive()) {
+            try {
+                firebase.initializeApp(firebaseConfig);
+                db = firebase.firestore();
+                storage = firebase.storage();
+                console.log("Firebase Cloud CMS успешно подключен!");
+            } catch (e) {
+                console.error("Ошибка инициализации Firebase:", e);
+            }
+        }
+
+        let isAdmin = sessionStorage.getItem("isAdmin") === "true";
+
+        // Persist data to localStorage and (if configured) to Firebase Firestore
+        async function persistData(key, data) {
+            localStorage.setItem(key, JSON.stringify(data));
+            if (isFirebaseActive()) {
+                try {
+                    await db.collection("settings").doc(key).set({ data: data });
+                } catch (e) {
+                    console.error("Ошибка синхронизации с Firebase:", e);
+                }
+            }
+        }
+
+        // Helper to convert file input to Base64 data URL
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
+        }
+
+        // Helper to upload image to Firebase Storage and get public URL
+        async function uploadToFirebase(file, path) {
+            const ref = storage.ref().child(path);
+            const snapshot = await ref.put(file);
+            return await snapshot.ref.getDownloadURL();
+        }
+
+        // Global DOM Elements
+        const fillingsGrid = document.getElementById("fillings-grid");
+        const emptyState = document.getElementById("empty-state");
+        const searchInput = document.getElementById("search-input");
+        const filterBtns = document.querySelectorAll(".filter-btn");
+        
+        let activeGalleryCategory = "all";
+        const galleryGrid = document.getElementById("gallery-grid");
+        const galleryFilterBtns = document.querySelectorAll(".gallery-filter-btn");
+        
+        // Modal Elements
+        const modal = document.getElementById("filling-modal");
+        const modalContainer = document.getElementById("modal-container");
+        const modalTitle = document.getElementById("modal-title");
+        const modalImage = document.getElementById("modal-image");
+        const modalCategory = document.getElementById("modal-category");
+        const modalDescription = document.getElementById("modal-description");
+        const modalClose = document.getElementById("modal-close");
+        const modalChooseBtn = document.getElementById("modal-choose-btn");
+
+        let activeCategory = "all";
+        let searchQuery = "";
+
+        // Render Fillings Grid
+        function renderFillings() {
+            fillingsGrid.innerHTML = "";
+            
+            // Add custom administration card at index 0 if admin
+            if (isAdmin) {
+                const addCard = document.createElement("div");
+                addCard.className = "flex flex-col bg-white border border-dashed border-brand-gold/60 rounded-xl overflow-hidden hover:border-brand-primary hover:shadow-md transition-all duration-300 items-center justify-center p-6 text-center cursor-pointer min-h-[300px] z-10 relative tilt-card animate-card-fade";
+                addCard.onclick = () => openAddFillingModal();
+                addCard.innerHTML = `
+                    <span class="material-symbols-outlined text-4xl text-brand-gold mb-2">add_circle</span>
+                    <h3 class="font-serif text-lg font-medium text-brand-dark mb-1">Добавить начинку</h3>
+                    <p class="text-xs text-brand-secondary font-light">Нажмите для добавления нового вкуса в каталог</p>
+                `;
+                fillingsGrid.appendChild(addCard);
+            }
+            
+            const filtered = fillingsData.filter(item => {
+                const matchesCategory = (activeCategory === "all" || item.category === activeCategory);
+                const matchesSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                       item.ingredients.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                       item.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+                return matchesCategory && matchesSearch;
+            });
+            
+            // Adjust categories filters label ( Все вкусы (Count) )
+            const allBtn = document.querySelector('[data-category="all"]');
+            if (allBtn) {
+                allBtn.textContent = `Все вкусы (${fillingsData.length})`;
+            }
+            
+            if (filtered.length === 0 && !isAdmin) {
+                emptyState.classList.remove("hidden");
+            } else {
+                emptyState.classList.add("hidden");
+                
+                filtered.forEach(item => {
+                    const card = document.createElement("div");
+                    card.className = "flex flex-col bg-white border border-brand-border/60 hover:border-brand-gold/60 rounded-xl overflow-hidden hover:shadow-md transition-all duration-300 group cursor-pointer animate-card-fade opacity-0 tilt-card relative";
+                    card.onclick = () => openModal(item);
+                    
+                    // Admin CRUD elements on card
+                    const deleteBtn = isAdmin ? `<button onclick="deleteFilling(event, ${item.id})" class="absolute top-2 right-2 p-1.5 bg-red-500 hover:bg-red-600 text-white rounded-full z-20 shadow-md flex items-center justify-center transition-colors" title="Удалить"><span class="material-symbols-outlined text-xs">delete</span></button>` : "";
+                    const editBtn = isAdmin ? `<button onclick="openEditFillingModal(event, ${item.id})" class="absolute top-2 right-9 p-1.5 bg-brand-primary hover:bg-brand-gold text-white rounded-full z-20 shadow-md flex items-center justify-center transition-colors" title="Редактировать"><span class="material-symbols-outlined text-xs">edit</span></button>` : "";
+                    
+                    card.innerHTML = `
+                        ${deleteBtn}
+                        ${editBtn}
+                        <div class="tilt-shine"></div>
+                        <div class="overflow-hidden aspect-video bg-neutral-900 relative">
+                            <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover object-bottom group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                            <div class="absolute top-3 left-3 flex flex-wrap gap-1">
+                                ${item.tags.slice(0, 2).map(tag => `<span class="bg-black/60 text-white text-[9px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-sm">${tag}</span>`).join('')}
+                            </div>
+                        </div>
+                        <div class="p-5 flex-1 flex flex-col justify-between">
+                            <div>
+                                <h3 class="font-serif text-xl font-medium text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">${item.title}</h3>
+                                <p class="text-xs text-brand-secondary line-clamp-3 leading-relaxed font-light mb-4">
+                                    ${item.ingredients.replace(/\n/g, ', ')}
+                                </p>
+                            </div>
+                            <div class="flex items-center justify-between pt-3 border-t border-brand-border/40 text-xs">
+                                <span class="text-brand-gold font-semibold uppercase tracking-wider">Подробнее</span>
+                                <span class="material-symbols-outlined text-brand-primary text-lg">arrow_forward</span>
+                            </div>
+                        </div>
+                    `;
+                    fillingsGrid.appendChild(card);
+                });
+                
+                // Initialize 3D Tilt for newly rendered cards
+                init3DTilt();
+            }
+        }
+
+        // Render Desserts Grid
+        function renderDesserts() {
+            const grid = document.getElementById("desserts-grid");
+            grid.innerHTML = "";
+            
+            dessertsData.forEach(item => {
+                const card = document.createElement("div");
+                card.className = "flex flex-col md:flex-row bg-white border border-brand-border/60 hover:border-brand-gold/60 rounded-xl overflow-hidden hover:shadow-md transition-all duration-300 group relative tilt-card animate-card-fade";
+                
+                // Admin Delete/Edit buttons
+                const deleteBtn = isAdmin ? `<button onclick="deleteDessert(event, ${item.id})" class="absolute top-3 right-3 z-30 p-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors shadow-md flex items-center justify-center" title="Удалить десерт"><span class="material-symbols-outlined text-xs">delete</span></button>` : "";
+                const editBtn = isAdmin ? `<button onclick="openEditDessertModal(event, ${item.id})" class="absolute top-3 right-12 z-30 p-2 bg-brand-primary text-white rounded-full hover:bg-brand-gold transition-colors shadow-md flex items-center justify-center" title="Редактировать десерт"><span class="material-symbols-outlined text-xs">edit</span></button>` : "";
+                
+                card.innerHTML = `
+                    ${deleteBtn}
+                    ${editBtn}
+                    <div class="tilt-shine"></div>
+                    <!-- Image viewer on the left/top -->
+                    <div class="md:w-1/2 h-64 md:h-auto relative bg-neutral-900 overflow-hidden flex flex-col justify-between">
+                        <img id="dessert-img-${item.id}" src="${item.imageWhole}" alt="${item.title}" class="w-full h-full object-cover object-bottom transition-all duration-500" />
+                        <!-- Toggle control overlays at bottom -->
+                        <div class="absolute bottom-3 left-3 right-3 flex justify-center gap-2 bg-black/45 backdrop-blur-sm py-1.5 px-3 rounded-full border border-white/10 z-20">
+                            <button type="button" onclick="switchDessertImage(${item.id}, '${item.imageWhole}', this)" class="text-[9px] uppercase tracking-wider font-semibold text-white px-2.5 py-0.5 bg-brand-primary rounded-sm transition-all focus:outline-none">Целиком</button>
+                            <button type="button" onclick="switchDessertImage(${item.id}, '${item.imageSlice}', this)" class="text-[9px] uppercase tracking-wider font-semibold text-white/70 hover:text-white px-2.5 py-0.5 rounded-sm transition-all focus:outline-none">В разрезе</button>
+                        </div>
+                    </div>
+                    <!-- Text on the right/bottom -->
+                    <div class="md:w-1/2 p-6 flex flex-col justify-between flex-1 relative z-10">
+                        <div>
+                            <span class="text-[9px] tracking-[0.25em] font-semibold text-brand-gold uppercase">Фирменный десерт</span>
+                            <h3 class="font-serif text-2xl font-light text-brand-dark mt-1 mb-3">${item.title}</h3>
+                            <p class="text-xs text-brand-secondary leading-relaxed font-light mb-4">${item.description}</p>
+                            
+                            <h4 class="text-[10px] font-semibold uppercase tracking-wider text-brand-secondary mb-1.5">Состав десерта:</h4>
+                            <p class="text-xs text-brand-dark leading-relaxed font-light whitespace-pre-line">${item.ingredients}</p>
+                        </div>
+                        <div class="pt-4 border-t border-brand-border/40 mt-6">
+                            <a href="#quick-contact" class="block w-full py-2.5 bg-brand-primary hover:bg-brand-gold text-white font-semibold text-center uppercase tracking-wider text-[10px] rounded transition-colors duration-300">Заказать к чаю</a>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+            
+            init3DTilt();
+        }
+
+        // Toggle photos inside dessert cards
+        window.switchDessertImage = function(id, src, btn) {
+            const img = document.getElementById(`dessert-img-${id}`);
+            if (img) img.src = src;
+            
+            const buttons = btn.parentElement.querySelectorAll("button");
+            buttons.forEach(b => {
+                b.className = "text-[9px] uppercase tracking-wider font-semibold px-2.5 py-0.5 rounded-sm transition-all focus:outline-none text-white/70 hover:text-white";
+            });
+            btn.className = "text-[9px] uppercase tracking-wider font-semibold px-2.5 py-0.5 rounded-sm transition-all focus:outline-none bg-brand-primary text-white";
+        }
+
+        // Filter Handlers
+        filterBtns.forEach(btn => {
+            btn.addEventListener("click", () => {
+                filterBtns.forEach(b => b.className = "filter-btn text-left px-4 py-2 rounded text-sm font-semibold uppercase tracking-wider text-brand-secondary hover:text-brand-primary hover:bg-white transition-all w-full");
+                btn.className = "filter-btn text-left px-4 py-2 rounded text-sm font-semibold uppercase tracking-wider bg-brand-primary text-white transition-all w-full";
+                
+                activeCategory = btn.getAttribute("data-category");
+                renderFillings();
+            });
+        });
+
+        // Search Handler
+        searchInput.addEventListener("input", (e) => {
+            searchQuery = e.target.value;
+            renderFillings();
+        });
+
+        // Modal Handlers
+        function openModal(item) {
+            modalTitle.textContent = item.title;
+            modalImage.src = item.image;
+            modalDescription.textContent = item.ingredients;
+            
+            const categoryMap = {
+                chocolate: "Шоколад и карамель",
+                berry: "Ягоды и фрукты",
+                mousse: "Муссовый / Нежный",
+                classic: "Классический вкус"
+            };
+            modalCategory.textContent = categoryMap[item.category] || "Начинка";
+            
+            modalChooseBtn.onclick = () => {
+                closeModal();
+            };
+            
+            ModalManager.open("filling-modal", "modal-container");
+        }
+
+        function closeModal() {
+            ModalManager.close("filling-modal", "modal-container");
+        }
+
+        modalClose.addEventListener("click", closeModal);
+        ModalManager.setupOverlayClose("filling-modal", closeModal);
+
+        // Mobile Menu Button
+        const menuBtn = document.getElementById("menu-btn");
+        const mobileMenu = document.getElementById("mobile-menu");
+        menuBtn.addEventListener("click", () => {
+            mobileMenu.classList.toggle("hidden");
+        });
+        
+        // Hide mobile menu on link click
+        mobileMenu.querySelectorAll("a").forEach(link => {
+            link.addEventListener("click", () => {
+                mobileMenu.classList.add("hidden");
+            });
+        });
+
+        // Shadow NavBar & Scroll Spy on Scroll
+        const nav = document.getElementById("main-nav");
+        const sections = document.querySelectorAll("section, footer");
+        const navLinks = document.querySelectorAll(".nav-link");
+        const mobileNavLinks = document.querySelectorAll(".mobile-nav-link");
+
+        window.addEventListener("scroll", () => {
+            // Shadow NavBar
+            if (window.scrollY > 40) {
+                nav.classList.add("shadow-md");
+            } else {
+                nav.classList.remove("shadow-md");
+            }
+
+            // Scroll Spy
+            let currentSection = "hero";
+            
+            // Check if user has scrolled to the absolute bottom of the document
+            const isAtBottom = (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 10);
+            
+            if (isAtBottom) {
+                currentSection = "contacts";
+            } else {
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (window.scrollY >= sectionTop - 160) {
+                        currentSection = section.getAttribute("id");
+                    }
+                });
+            }
+
+            // Update desktop active links
+            navLinks.forEach(link => {
+                const href = link.getAttribute("href").substring(1);
+                if (href === currentSection) {
+                    link.className = "nav-link text-sm font-semibold uppercase tracking-wider text-brand-primary border-b-2 border-brand-primary pb-1 transition-all";
+                } else {
+                    link.className = "nav-link text-sm font-semibold uppercase tracking-wider text-brand-secondary hover:text-brand-primary transition-all";
+                }
+            });
+
+            // Update mobile active links
+            mobileNavLinks.forEach(link => {
+                const href = link.getAttribute("href").substring(1);
+                if (href === currentSection) {
+                    link.className = "mobile-nav-link text-base font-semibold uppercase tracking-wider text-brand-primary";
+                } else {
+                    link.className = "mobile-nav-link text-base font-semibold uppercase tracking-wider text-brand-dark hover:text-brand-primary";
+                }
+            });
+        });
+
+        // FAQ Accordion logic
+        function toggleFaq(button) {
+            const item = button.parentElement;
+            const isOpen = item.classList.contains("active");
+            
+            // Close all FAQ items (accordion behavior)
+            document.querySelectorAll(".faq-item").forEach(i => {
+                i.classList.remove("active");
+                const icon = i.querySelector(".faq-icon-wrapper span");
+                icon.textContent = "add";
+                const wrapper = i.querySelector(".faq-icon-wrapper");
+                wrapper.style.transform = "rotate(0deg)";
+            });
+            
+            if (!isOpen) {
+                item.classList.add("active");
+                const icon = item.querySelector(".faq-icon-wrapper span");
+                icon.textContent = "close";
+                const wrapper = item.querySelector(".faq-icon-wrapper");
+                wrapper.style.transform = "rotate(180deg)";
+            }
+        }
+
+        // Setup scroll animations dynamically
+        function setupScrollAnimations() {
+            // Select elements to animate
+            const selectors = [
+                "#quick-contact",
+                "#quick-contact .grid > a",
+                "#gallery > div:first-child",
+                "#gallery #gallery-grid > div",
+                "#desserts",
+                "#desserts #desserts-grid > div",
+                "#faq",
+                "#faq .faq-item"
+            ];
+            
+            const elementsToObserve = [];
+            selectors.forEach(sel => {
+                document.querySelectorAll(sel).forEach(el => {
+                    el.classList.add("reveal-item");
+                    elementsToObserve.push(el);
+                });
+            });
+            
+            // Create Intersection Observer
+            const observerOptions = {
+                root: null,
+                threshold: 0.05,
+                rootMargin: "0px 0px -40px 0px"
+            };
+            
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("revealed");
+                        obs.unobserve(entry.target); // Animate only once
+                    }
+                });
+            }, observerOptions);
+            
+            elementsToObserve.forEach(el => observer.observe(el));
+        }
+
+        // Dark Mode Logic
+        const themeToggleBtn = document.getElementById("theme-toggle");
+        const themeToggleBtnMobile = document.getElementById("theme-toggle-mobile");
+        
+        function getSystemTheme() {
+            return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        }
+        
+        function savedTheme() {
+            return localStorage.getItem("theme");
+        }
+        
+        function applyTheme(theme) {
+            const icon = themeToggleBtn.querySelector("span");
+            const iconMobile = themeToggleBtnMobile.querySelector("span");
+            
+            if (theme === "dark") {
+                document.documentElement.classList.add("dark");
+                icon.textContent = "light_mode";
+                icon.style.transform = "rotate(180deg)";
+                iconMobile.textContent = "light_mode";
+                iconMobile.style.transform = "rotate(180deg)";
+            } else {
+                document.documentElement.classList.remove("dark");
+                icon.textContent = "dark_mode";
+                icon.style.transform = "rotate(0deg)";
+                iconMobile.textContent = "dark_mode";
+                iconMobile.style.transform = "rotate(0deg)";
+            }
+        }
+        
+        function toggleTheme() {
+            const currentTheme = document.documentElement.classList.contains("dark") ? "light" : "dark";
+            localStorage.setItem("theme", currentTheme);
+            applyTheme(currentTheme);
+        }
+        
+        themeToggleBtn.addEventListener("click", toggleTheme);
+        themeToggleBtnMobile.addEventListener("click", toggleTheme);
+        
+        // Initial Theme Load
+        const initialTheme = savedTheme() || getSystemTheme();
+        applyTheme(initialTheme);
+
+        // Video Modal Logic
+        const videoModal = document.getElementById("video-modal");
+        const videoModalContainer = document.getElementById("video-modal-container");
+        const promoVideo = document.getElementById("promo-video");
+        
+        function openVideoModal() {
+            promoVideo.src = "https://player.vimeo.com/video/446268386?autoplay=1&muted=1";
+            ModalManager.open("video-modal", "video-modal-container");
+        }
+        
+        function closeVideoModal() {
+            ModalManager.close("video-modal", "video-modal-container", () => {
+                promoVideo.src = ""; // Clear source so it stops playing!
+            });
+        }
+        
+        ModalManager.setupOverlayClose("video-modal", closeVideoModal);
+
+        // Render gallery grid of tiles
+        function renderGallery() {
+            galleryGrid.innerHTML = "";
+            
+            if (isAdmin) {
+                const addCard = document.createElement("div");
+                addCard.className = "flex flex-col bg-white border border-dashed border-brand-gold/60 rounded-lg overflow-hidden hover:border-brand-primary hover:shadow-md transition-all duration-300 items-center justify-center p-6 text-center cursor-pointer aspect-square z-10 relative tilt-card animate-card-fade";
+                addCard.onclick = () => openAddGalleryModal();
+                addCard.innerHTML = `
+                    <span class="material-symbols-outlined text-4xl text-brand-gold mb-2">add_circle</span>
+                    <h3 class="font-serif text-base font-medium text-brand-dark mb-1">Добавить фото</h3>
+                    <p class="text-[10px] text-brand-secondary font-light">Нажмите для добавления работы в галерею</p>
+                `;
+                galleryGrid.appendChild(addCard);
+            }
+
+            const filtered = galleryItems.filter(item => {
+                return activeGalleryCategory === "all" || item.category === activeGalleryCategory;
+            });
+            
+            filtered.forEach((item, index) => {
+                const card = document.createElement("div");
+                card.className = "group relative overflow-hidden aspect-square bg-neutral-100 border border-brand-border rounded-lg flex flex-col justify-end p-6 hover:shadow-lg transition-all duration-500 cursor-pointer tilt-card animate-card-fade opacity-0";
+                
+                // Lightbox mapping
+                const fullIndex = galleryItems.findIndex(g => g.id === item.id);
+                card.onclick = () => openLightbox(fullIndex);
+                
+                // Admin CRUD buttons on gallery card
+                const deleteBtn = isAdmin ? `<button onclick="deleteGalleryItem(event, ${item.id})" class="absolute top-2 right-2 p-1.5 bg-red-500 hover:bg-red-600 text-white rounded-full z-20 shadow-md flex items-center justify-center transition-colors hover:scale-105" title="Удалить"><span class="material-symbols-outlined text-xs">delete</span></button>` : "";
+                const editBtn = isAdmin ? `<button onclick="openEditGalleryModal(event, ${item.id})" class="absolute top-2 right-9 p-1.5 bg-brand-primary hover:bg-brand-gold text-white rounded-full z-20 shadow-md flex items-center justify-center transition-colors hover:scale-105" title="Редактировать"><span class="material-symbols-outlined text-xs">edit</span></button>` : "";
+                
+                card.innerHTML = `
+                    ${deleteBtn}
+                    ${editBtn}
+                    <div class="tilt-shine"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10 opacity-70 group-hover:opacity-85 transition-opacity"></div>
+                    <div class="w-full h-full absolute inset-0 object-cover bg-cover bg-center group-hover:scale-105 transition-transform duration-700" style="background-image: url('${item.image}');"></div>
+                    <div class="relative z-20 text-white">
+                        <span class="text-[9px] tracking-[0.2em] uppercase text-brand-light-gold font-semibold">${item.tag}</span>
+                    </div>
+                `;
+                galleryGrid.appendChild(card);
+            });
+            
+            init3DTilt();
+        }
+
+        // Gallery Filter event listeners
+        galleryFilterBtns.forEach(btn => {
+            btn.addEventListener("click", () => {
+                galleryFilterBtns.forEach(b => b.className = "gallery-filter-btn px-4 py-2 rounded text-xs font-semibold uppercase tracking-wider text-brand-secondary hover:text-brand-primary hover:bg-white border border-brand-border/60 transition-all");
+                btn.className = "gallery-filter-btn px-4 py-2 rounded text-xs font-semibold uppercase tracking-wider bg-brand-primary text-white border border-brand-primary transition-all shadow-sm";
+                
+                activeGalleryCategory = btn.getAttribute("data-category");
+                renderGallery();
+            });
+        });
+
+        // Lightbox Gallery Logic
+        const lightbox = document.getElementById("gallery-lightbox");
+        const lightboxImg = document.getElementById("lightbox-img");
+        const lightboxTag = document.getElementById("lightbox-tag");
+        // const lightboxTitle = document.getElementById("lightbox-title");
+        let activeSlideIndex = 0;
+        
+        function openLightbox(index) {
+            activeSlideIndex = index;
+            populateLightbox();
+            ModalManager.open("gallery-lightbox");
+        }
+        
+        function closeLightbox() {
+            ModalManager.close("gallery-lightbox");
+        }
+        
+        function populateLightbox() {
+            const data = galleryItems[activeSlideIndex];
+            lightboxImg.src = data.image;
+            lightboxTag.textContent = data.tag;
+            // lightboxTitle.textContent = data.title;
+        }
+        
+        function changeLightboxSlide(direction) {
+            activeSlideIndex += direction;
+            if (activeSlideIndex < 0) activeSlideIndex = galleryItems.length - 1;
+            if (activeSlideIndex >= galleryItems.length) activeSlideIndex = 0;
+            
+            // Fade-out/fade-in image effect
+            lightboxImg.style.opacity = 0;
+            lightboxImg.style.transform = "scale(0.95)";
+            setTimeout(() => {
+                populateLightbox();
+                lightboxImg.style.opacity = 1;
+                lightboxImg.style.transform = "scale(1)";
+            }, 150);
+        }
+        
+        ModalManager.setupOverlayClose("gallery-lightbox", closeLightbox);
+        ModalManager.setupOverlayClose("admin-add-dessert-modal", () => closeAddDessertModal());
+        ModalManager.setupOverlayClose("admin-add-gallery-modal", () => closeAddGalleryModal());
+        
+        // Keyboard support
+        document.addEventListener("keydown", (e) => {
+            if (!lightbox.classList.contains("hidden")) {
+                if (e.key === "Escape") closeLightbox();
+                if (e.key === "ArrowLeft") changeLightboxSlide(-1);
+                if (e.key === "ArrowRight") changeLightboxSlide(1);
+            }
+        });
+
+        // Admin authentication and panel logic
+        window.openAdminLogin = function() {
+            const passwordInput = document.getElementById("admin-password");
+            passwordInput.value = "";
+            document.getElementById("login-error").classList.add("hidden");
+            
+            if (!passwordInput.dataset.listenerAdded) {
+                passwordInput.addEventListener("keydown", (e) => {
+                    if (e.key === "Enter") {
+                        loginAdmin();
+                    }
+                });
+                passwordInput.dataset.listenerAdded = "true";
+            }
+            
+            ModalManager.open("admin-login-modal", "login-modal-container", () => {
+                passwordInput.focus();
+            });
+        }
+
+        window.closeAdminLogin = function() {
+            ModalManager.close("admin-login-modal", "login-modal-container");
+        }
+
+        window.loginAdmin = function() {
+            const pass = document.getElementById("admin-password").value;
+            if (pass === "admin") {
+                isAdmin = true;
+                sessionStorage.setItem("isAdmin", "true");
+                updateAdminUI();
+                closeAdminLogin();
+            } else {
+                document.getElementById("login-error").classList.remove("hidden");
+            }
+        }
+
+        window.logoutAdmin = function() {
+            isAdmin = false;
+            sessionStorage.removeItem("isAdmin");
+            updateAdminUI();
+        }
+
+        function updateAdminUI() {
+            const addDessertBtn = document.getElementById("admin-add-dessert-btn");
+            const portalLink = document.getElementById("admin-portal-link");
+            const logoutLink = document.getElementById("admin-logout-link");
+            
+            if (isAdmin) {
+                if (addDessertBtn) addDessertBtn.classList.remove("hidden");
+                if (portalLink) portalLink.classList.add("hidden");
+                if (logoutLink) logoutLink.classList.remove("hidden");
+            } else {
+                if (addDessertBtn) addDessertBtn.classList.add("hidden");
+                if (portalLink) portalLink.classList.remove("hidden");
+                if (logoutLink) logoutLink.classList.add("hidden");
+            }
+            
+            renderFillings();
+            renderDesserts();
+            renderGallery();
+        }
+
+        // Fillings admin modal CRUD actions
+        window.openAddFillingModal = function() {
+            document.getElementById("filling-form").reset();
+            document.getElementById("filling-edit-id").value = "";
+            document.getElementById("filling-modal-title-text").textContent = "Добавить новую начинку";
+            
+            renderFillingTemplates();
+            
+            ModalManager.open("admin-add-filling-modal", "add-filling-modal-container");
+        }
+
+        window.openEditFillingModal = function(event, id) {
+            if (event) event.stopPropagation();
+            
+            const item = fillingsData.find(f => f.id === id);
+            if (!item) return;
+            
+            document.getElementById("filling-edit-id").value = item.id;
+            document.getElementById("filling-title-input").value = item.title;
+            document.getElementById("filling-category-select").value = item.category;
+            document.getElementById("filling-tags-input").value = item.tags.join(", ");
+            document.getElementById("filling-ingredients-textarea").value = item.ingredients;
+            document.getElementById("filling-image-input").value = item.image;
+            document.getElementById("filling-modal-title-text").textContent = "Редактировать начинку";
+            
+            renderFillingTemplates();
+            
+            ModalManager.open("admin-add-filling-modal", "add-filling-modal-container");
+        }
+
+        window.closeAddFillingModal = function() {
+            ModalManager.close("admin-add-filling-modal", "add-filling-modal-container");
+        }
+
+        window.saveFillingForm = async function(event) {
+            event.preventDefault();
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Сохранение...";
+            
+            try {
+                const editId = document.getElementById("filling-edit-id").value;
+                const title = document.getElementById("filling-title-input").value;
+                const category = document.getElementById("filling-category-select").value;
+                const tags = document.getElementById("filling-tags-input").value.split(",").map(t => t.trim()).filter(t => t.length > 0);
+                const ingredients = document.getElementById("filling-ingredients-textarea").value;
+                let image = document.getElementById("filling-image-input").value;
+                
+                const fileInput = document.getElementById("filling-image-file");
+                if (fileInput && fileInput.files.length > 0) {
+                    const file = fileInput.files[0];
+                    if (isFirebaseActive()) {
+                        image = await uploadToFirebase(file, `fillings/${Date.now()}_${file.name}`);
+                    } else {
+                        image = await fileToBase64(file);
+                    }
+                }
+                
+                if (!image || image.trim() === "") {
+                    image = "fillings/552423037_17941112765992019_7674789079820265346_n.jpg";
+                }
+                
+                if (editId) {
+                    const filling = fillingsData.find(f => f.id == editId);
+                    if (filling) {
+                        filling.title = title;
+                        filling.category = category;
+                        filling.tags = tags;
+                        filling.ingredients = ingredients;
+                        filling.image = image;
+                    }
+                } else {
+                    const newId = fillingsData.length > 0 ? Math.max(...fillingsData.map(f => f.id)) + 1 : 1;
+                    fillingsData.push({ id: newId, title, category, tags, ingredients, image });
+                }
+                
+                await persistData("fillingsData_v2", fillingsData);
+                renderFillings();
+                closeAddFillingModal();
+            } catch (e) {
+                alert("Ошибка сохранения: " + e.message);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Сохранить";
+            }
+        }
+
+        window.deleteFilling = async function(event, id) {
+            if (event) event.stopPropagation();
+            if (confirm("Вы действительно хотите удалить эту начинку из каталога?")) {
+                fillingsData = fillingsData.filter(f => f.id !== id);
+                await persistData("fillingsData_v2", fillingsData);
+                renderFillings();
+            }
+        }
+
+        function renderFillingTemplates() {
+            const container = document.getElementById("filling-template-images");
+            if (!container) return;
+            container.innerHTML = "";
+            const images = [...new Set(defaultFillingsData.map(f => f.image))];
+            images.forEach(img => {
+                const btn = document.createElement("button");
+                btn.type = "button";
+                btn.className = "border border-brand-border/40 hover:border-brand-gold rounded overflow-hidden aspect-video transition-all bg-white relative group";
+                btn.onclick = () => {
+                    document.getElementById("filling-image-input").value = img;
+                };
+                btn.innerHTML = `<img src="${img}" class="w-full h-full object-cover" /><div class="absolute inset-0 bg-black/25 group-hover:bg-transparent"></div>`;
+                container.appendChild(btn);
+            });
+        }
+
+        // Desserts admin modal CRUD actions
+        window.openAddDessertModal = function() {
+            document.getElementById("dessert-form").reset();
+            document.getElementById("dessert-edit-id").value = "";
+            document.getElementById("dessert-modal-title-text").textContent = "Добавить новый десерт";
+            ModalManager.open("admin-add-dessert-modal", "add-dessert-modal-container");
+        }
+
+        window.openEditDessertModal = function(event, id) {
+            if (event) event.stopPropagation();
+            
+            const item = dessertsData.find(d => d.id === id);
+            if (!item) return;
+            
+            document.getElementById("dessert-edit-id").value = item.id;
+            document.getElementById("dessert-title-input").value = item.title;
+            document.getElementById("dessert-description-textarea").value = item.description;
+            document.getElementById("dessert-ingredients-textarea").value = item.ingredients;
+            document.getElementById("dessert-image-whole-input").value = item.imageWhole;
+            document.getElementById("dessert-image-slice-input").value = item.imageSlice;
+            document.getElementById("dessert-modal-title-text").textContent = "Редактировать десерт";
+            
+            ModalManager.open("admin-add-dessert-modal", "add-dessert-modal-container");
+        }
+
+        window.closeAddDessertModal = function() {
+            ModalManager.close("admin-add-dessert-modal", "add-dessert-modal-container");
+        }
+
+        window.selectDessertPhotoTemplate = function(whole, slice) {
+            document.getElementById("dessert-image-whole-input").value = whole;
+            document.getElementById("dessert-image-slice-input").value = slice;
+        }
+
+        window.saveDessertForm = async function(event) {
+            event.preventDefault();
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Сохранение...";
+            
+            try {
+                const editId = document.getElementById("dessert-edit-id").value;
+                const title = document.getElementById("dessert-title-input").value;
+                const description = document.getElementById("dessert-description-textarea").value;
+                const ingredients = document.getElementById("dessert-ingredients-textarea").value;
+                let imageWhole = document.getElementById("dessert-image-whole-input").value;
+                let imageSlice = document.getElementById("dessert-image-slice-input").value;
+                
+                const wholeFileInput = document.getElementById("dessert-image-whole-file");
+                if (wholeFileInput && wholeFileInput.files.length > 0) {
+                    const file = wholeFileInput.files[0];
+                    if (isFirebaseActive()) {
+                        imageWhole = await uploadToFirebase(file, `desserts/${Date.now()}_whole_${file.name}`);
+                    } else {
+                        imageWhole = await fileToBase64(file);
+                    }
+                }
+                
+                const sliceFileInput = document.getElementById("dessert-image-slice-file");
+                if (sliceFileInput && sliceFileInput.files.length > 0) {
+                    const file = sliceFileInput.files[0];
+                    if (isFirebaseActive()) {
+                        imageSlice = await uploadToFirebase(file, `desserts/${Date.now()}_slice_${file.name}`);
+                    } else {
+                        imageSlice = await fileToBase64(file);
+                    }
+                }
+                
+                if (editId) {
+                    const dessert = dessertsData.find(d => d.id == editId);
+                    if (dessert) {
+                        dessert.title = title;
+                        dessert.description = description;
+                        dessert.ingredients = ingredients;
+                        dessert.imageWhole = imageWhole;
+                        dessert.imageSlice = imageSlice;
+                    }
+                } else {
+                    const newId = dessertsData.length > 0 ? Math.max(...dessertsData.map(d => d.id)) + 1 : 1;
+                    dessertsData.push({ id: newId, title, description, ingredients, imageWhole, imageSlice });
+                }
+                
+                await persistData("dessertsData", dessertsData);
+                renderDesserts();
+                closeAddDessertModal();
+            } catch (e) {
+                alert("Ошибка сохранения: " + e.message);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Сохранить";
+            }
+        }
+
+        window.deleteDessert = async function(event, id) {
+            if (event) event.stopPropagation();
+            if (confirm("Вы действительно хотите удалить этот десерт из каталога?")) {
+                dessertsData = dessertsData.filter(d => d.id !== id);
+                await persistData("dessertsData", dessertsData);
+                renderDesserts();
+            }
+        }
+
+        // Gallery admin modal CRUD actions
+        window.openAddGalleryModal = function() {
+            document.getElementById("gallery-form").reset();
+            document.getElementById("gallery-edit-id").value = "";
+            document.getElementById("gallery-modal-title-text").textContent = "Добавить новую работу";
+            
+            renderGalleryTemplates();
+            
+            ModalManager.open("admin-add-gallery-modal", "add-gallery-modal-container");
+        }
+
+        window.openEditGalleryModal = function(event, id) {
+            if (event) event.stopPropagation();
+            
+            const item = galleryItems.find(g => g.id === id);
+            if (!item) return;
+            
+            document.getElementById("gallery-edit-id").value = item.id;
+            document.getElementById("gallery-title-input").value = item.title;
+            document.getElementById("gallery-category-select").value = item.category;
+            document.getElementById("gallery-tag-input").value = item.tag;
+            document.getElementById("gallery-image-input").value = item.image;
+            document.getElementById("gallery-modal-title-text").textContent = "Редактировать работу";
+            
+            renderGalleryTemplates();
+            
+            ModalManager.open("admin-add-gallery-modal", "add-gallery-modal-container");
+        }
+
+        window.closeAddGalleryModal = function() {
+            ModalManager.close("admin-add-gallery-modal", "add-gallery-modal-container");
+        }
+
+        window.saveGalleryForm = async function(event) {
+            event.preventDefault();
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Сохранение...";
+            
+            try {
+                const editId = document.getElementById("gallery-edit-id").value;
+                const title = document.getElementById("gallery-title-input").value;
+                const category = document.getElementById("gallery-category-select").value;
+                const tag = document.getElementById("gallery-tag-input").value;
+                let image = document.getElementById("gallery-image-input").value;
+                
+                const fileInput = document.getElementById("gallery-image-file");
+                if (fileInput && fileInput.files.length > 0) {
+                    const file = fileInput.files[0];
+                    if (isFirebaseActive()) {
+                        image = await uploadToFirebase(file, `gallery/${Date.now()}_${file.name}`);
+                    } else {
+                        image = await fileToBase64(file);
+                    }
+                }
+                
+                if (editId) {
+                    const item = galleryItems.find(g => g.id == editId);
+                    if (item) {
+                        item.title = title;
+                        item.category = category;
+                        item.tag = tag;
+                        item.image = image;
+                    }
+                } else {
+                    const newId = galleryItems.length > 0 ? Math.max(...galleryItems.map(g => g.id)) + 1 : 1;
+                    galleryItems.push({ id: newId, title, category, tag, image });
+                }
+                
+                await persistData("galleryItems_v2", galleryItems);
+                renderGallery();
+                closeAddGalleryModal();
+            } catch (e) {
+                alert("Ошибка сохранения: " + e.message);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Сохранить";
+            }
+        }
+
+        window.deleteGalleryItem = async function(event, id) {
+            if (event) event.stopPropagation();
+            if (confirm("Вы действительно хотите удалить это фото из галереи?")) {
+                galleryItems = galleryItems.filter(g => g.id !== id);
+                await persistData("galleryItems_v2", galleryItems);
+                renderGallery();
+            }
+        }
+
+        function renderGalleryTemplates() {
+            const container = document.getElementById("gallery-template-images");
+            if (!container) return;
+            container.innerHTML = "";
+            const images = [...new Set(defaultGalleryItems.map(g => g.image))];
+            images.forEach(img => {
+                const btn = document.createElement("button");
+                btn.type = "button";
+                btn.className = "border border-brand-border/40 hover:border-brand-gold rounded overflow-hidden aspect-square transition-all bg-white relative group";
+                btn.onclick = () => {
+                    document.getElementById("gallery-image-input").value = img;
+                };
+                btn.innerHTML = `<img src="${img}" class="w-full h-full object-cover" /><div class="absolute inset-0 bg-black/25 group-hover:bg-transparent"></div>`;
+                container.appendChild(btn);
+            });
+        }
+
+        // 3D Tilt Effect Logic
+        function init3DTilt() {
+            const cards = document.querySelectorAll(".tilt-card");
+            
+            cards.forEach(card => {
+                const shine = card.querySelector(".tilt-shine");
+                
+                card.addEventListener("mousemove", (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    // Coordinates relative to card center
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const rotateX = -(y - centerY) / (rect.height / 12); // max 10 degrees tilt
+                    const rotateY = (x - centerX) / (rect.width / 12);
+                    
+                    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.015)`;
+                    card.style.boxShadow = "0 15px 30px rgba(0,0,0,0.12)";
+                    
+                    // Shine gradient positioning
+                    const percentX = (x / rect.width) * 100;
+                    const percentY = (y / rect.height) * 100;
+                    if (shine) {
+                        shine.style.background = `radial-gradient(circle at ${percentX}% ${percentY}%, ${document.documentElement.classList.contains('dark') ? 'rgba(255, 222, 165, 0.06)' : 'rgba(255, 255, 255, 0.15)'} 0%, transparent 60%)`;
+                    }
+                });
+                
+                card.addEventListener("mouseleave", () => {
+                    card.style.transform = "rotateX(0deg) rotateY(0deg) scale(1)";
+                    card.style.boxShadow = "none";
+                });
+            });
+        }
+
+        // Initialize Cloud Firebase sync on startup
+        async function initCloudData() {
+            if (isFirebaseActive()) {
+                try {
+                    const fillingsDoc = await db.collection("settings").doc("fillingsData_v2").get();
+                    if (fillingsDoc.exists) {
+                        fillingsData = fillingsDoc.data().data;
+                    }
+                    const dessertsDoc = await db.collection("settings").doc("dessertsData").get();
+                    if (dessertsDoc.exists) {
+                        dessertsData = dessertsDoc.data().data;
+                    }
+                    const galleryDoc = await db.collection("settings").doc("galleryItems_v2").get();
+                    if (galleryDoc.exists) {
+                        galleryItems = galleryDoc.data().data;
+                    }
+                    // Re-render components with newly loaded database items
+                    renderFillings();
+                    renderDesserts();
+                    renderGallery();
+                    console.log("Данные из Firebase Cloud CMS успешно загружены!");
+                } catch (e) {
+                    console.error("Ошибка загрузки данных из Firebase:", e);
+                }
+            }
+        }
+
+        // Init App
+        renderFillings();
+        renderGallery();
+        renderDesserts();
+        updateAdminUI();
+        setupScrollAnimations();
+        initCloudData();
+    </script>
+</body>
+</html>
