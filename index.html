@@ -516,20 +516,14 @@
                         <a class="px-8 py-4 border border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white transition-all duration-300 font-semibold tracking-widest text-xs uppercase rounded-sm text-center" href="#gallery">
                             Галерея работ
                         </a>
-                        <button onclick="openVideoModal()" class="flex items-center gap-3 text-brand-primary hover:text-brand-gold transition-colors font-semibold uppercase tracking-wider text-xs focus:outline-none group justify-center sm:justify-start" aria-label="Смотреть видео процесса">
-                            <span class="relative w-11 h-11 rounded-full border border-brand-primary/25 flex items-center justify-center bg-white/60 dark:bg-black/30 backdrop-blur-sm group-hover:scale-105 transition-all">
-                                <span class="material-symbols-outlined text-xl text-brand-primary ml-0.5">play_arrow</span>
-                            </span>
-                            <span>Процесс</span>
-                        </button>
-                    </div>
+                        </div>
                     <div class="grid grid-cols-3 gap-3 max-w-lg mt-10 text-center sm:text-left">
                         <div class="editorial-panel rounded-lg px-4 py-3 backdrop-blur-sm">
                             <div class="font-serif text-2xl text-brand-primary dark:text-brand-light-gold">25</div>
                             <div class="text-[10px] uppercase tracking-widest text-brand-secondary font-semibold">начинок</div>
                         </div>
                         <div class="editorial-panel rounded-lg px-4 py-3 backdrop-blur-sm">
-                            <div class="font-serif text-2xl text-brand-primary dark:text-brand-light-gold">10</div>
+                            <div class="font-serif text-2xl text-brand-primary dark:text-brand-light-gold">10+</div>
                             <div class="text-[10px] uppercase tracking-widest text-brand-secondary font-semibold">десертов</div>
                         </div>
                         <div class="editorial-panel rounded-lg px-4 py-3 backdrop-blur-sm">
@@ -619,10 +613,10 @@
             </div>
 
             <div class="flex flex-wrap gap-2 mb-9 relative z-10" id="gallery-filters">
-                <button class="gallery-filter-btn catalog-filter catalog-filter-active" data-category="all">Все работы</button>
-                <button class="gallery-filter-btn catalog-filter" data-category="wedding">Свадебные торты</button>
-                <button class="gallery-filter-btn catalog-filter" data-category="kids">Детские торты</button>
-                <button class="gallery-filter-btn catalog-filter" data-category="festive">Праздничные / Тематические</button>
+                <button class="gallery-filter-btn catalog-filter catalog-filter-active" data-category="folders">📁 Все папки (альбомы)</button>
+                <button class="gallery-filter-btn catalog-filter" data-category="wedding">💒 Свадебные торты</button>
+                <button class="gallery-filter-btn catalog-filter" data-category="kids">🎈 Детские торты</button>
+                <button class="gallery-filter-btn catalog-filter" data-category="festive">🎉 Праздничные и тематические</button>
             </div>
             
             <div class="relative z-10 max-w-7xl mx-auto">
@@ -924,16 +918,7 @@
         </div>
     </div>
 
-    <!-- Video Modal -->
-    <div id="video-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300">
-        <div class="relative w-full max-w-4xl bg-black rounded-2xl overflow-hidden shadow-2xl border border-white/10 scale-95 transition-transform duration-300" id="video-modal-container">
-            <button onclick="closeVideoModal()" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/50 border border-white/20 text-white flex items-center justify-center hover:bg-black/75 transition-colors shadow-lg z-50 focus:outline-none">
-                <span class="material-symbols-outlined text-2xl">close</span>
-            </button>
-            <div class="aspect-video w-full">
-                <iframe id="promo-video" class="w-full h-full" src="about:blank" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-            </div>
-        </div>
+    
     </div>
 
     <!-- Gallery Lightbox Modal -->
@@ -1660,7 +1645,7 @@
         const searchInput = document.getElementById("search-input");
         const filterBtns = document.querySelectorAll(".filter-btn");
         
-        let activeGalleryCategory = "all";
+        let activeGalleryCategory = "folders";
         const galleryGrid = document.getElementById("gallery-grid");
         const galleryFilterBtns = document.querySelectorAll(".gallery-filter-btn");
         
@@ -2060,63 +2045,157 @@
         
         ModalManager.setupOverlayClose("video-modal", closeVideoModal);
 
-        // Render gallery grid of tiles
+        // Render gallery grid (Folders or Photos inside a Folder)
+        function selectGalleryCategory(cat) {
+            activeGalleryCategory = cat;
+            galleryFilterBtns.forEach(btn => {
+                if (btn.getAttribute("data-category") === cat) {
+                    btn.className = "gallery-filter-btn catalog-filter catalog-filter-active";
+                } else {
+                    btn.className = "gallery-filter-btn catalog-filter";
+                }
+            });
+            renderGallery();
+        }
+
         function renderGallery() {
             galleryGrid.innerHTML = "";
-            
-            if (isAdmin) {
-                const addCard = document.createElement("div");
-                addCard.className = "editorial-panel rounded-lg min-h-[430px] flex flex-col items-center justify-center p-6 text-center cursor-pointer z-10 relative tilt-card animate-card-fade border-dashed hover:border-brand-gold/70 transition-all";
-                addCard.onclick = () => openAddGalleryModal();
-                addCard.innerHTML = `
-                    <span class="material-symbols-outlined text-4xl text-brand-gold mb-2">add_circle</span>
-                    <h3 class="font-serif text-base font-medium text-brand-dark mb-1">Добавить фото</h3>
-                    <p class="text-[10px] text-brand-secondary font-light">Нажмите для добавления работы в галерею</p>
-                `;
-                galleryGrid.appendChild(addCard);
-            }
 
-            const filtered = galleryItems.filter(item => {
-                return activeGalleryCategory === "all" || item.category === activeGalleryCategory;
-            });
-            
-            filtered.forEach((item, index) => {
-                const card = document.createElement("div");
-                card.className = "showcase-card showcase-card-tall group relative overflow-hidden rounded-lg border border-brand-border/60 bg-neutral-100 shadow-sm cursor-pointer tilt-card animate-card-fade opacity-0";
-                card.style.animationDelay = `${Math.min(index * 35, 320)}ms`;
-                card.setAttribute("role", "button");
-                card.setAttribute("tabindex", "0");
-                card.setAttribute("aria-label", `Открыть торт ${item.title}`);
-                
-                // Lightbox mapping
-                card.onclick = () => openLightbox(index, filtered);
-                card.addEventListener("keydown", (event) => {
-                    if (event.key === "Enter" || event.key === " ") {
-                        event.preventDefault();
-                        openLightbox(index, filtered);
+            if (activeGalleryCategory === "folders") {
+                // Folder Cards View
+                const foldersConfig = [
+                    {
+                        category: "wedding",
+                        title: "Свадебные торты",
+                        icon: "folder",
+                        badge: "💒 Альбом",
+                        cover: "tort/wedding/photo_1_2026-07-05_13-22-09.jpg"
+                    },
+                    {
+                        category: "kids",
+                        title: "Детские торты",
+                        icon: "folder",
+                        badge: "🎈 Альбом",
+                        cover: "tort/kids/photo_1_2026-07-05_13-20-38.jpg"
+                    },
+                    {
+                        category: "festive",
+                        title: "Праздничные и тематические",
+                        icon: "folder",
+                        badge: "🎉 Альбом",
+                        cover: "tort/bento/photo_1_2026-07-05_13-19-47.jpg"
                     }
-                });
-                
-                // Admin CRUD buttons on gallery card
-                const deleteBtn = isAdmin ? `<button onclick="deleteGalleryItem(event, ${item.id})" class="absolute top-3 right-3 p-2 bg-red-500 hover:bg-red-600 text-white rounded-full z-30 shadow-md flex items-center justify-center transition-colors hover:scale-105" title="Удалить"><span class="material-symbols-outlined text-xs">delete</span></button>` : "";
-                const editBtn = isAdmin ? `<button onclick="openEditGalleryModal(event, ${item.id})" class="absolute top-3 right-12 p-2 bg-brand-primary hover:bg-brand-gold text-white rounded-full z-30 shadow-md flex items-center justify-center transition-colors hover:scale-105" title="Редактировать"><span class="material-symbols-outlined text-xs">edit</span></button>` : "";
-                
-                card.innerHTML = `
-                    ${deleteBtn}
-                    ${editBtn}
-                    <div class="tilt-shine"></div>
-                    <img src="${item.image}" alt="${item.title}" class="absolute inset-0 w-full h-full object-cover object-center" loading="lazy" />
-                    <div class="absolute inset-x-0 bottom-0 z-20 p-5 text-white">
-                        <span class="text-[9px] tracking-[0.24em] uppercase text-brand-light-gold font-semibold">${item.tag}</span>
-                        <h3 class="font-serif text-2xl md:text-3xl font-light mt-1 leading-tight">${item.title}</h3>
-                        <div class="flex items-center gap-2 text-[10px] uppercase tracking-wider font-semibold mt-4 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                            <span>Смотреть</span>
-                            <span class="material-symbols-outlined text-sm">open_in_full</span>
+                ];
+
+                foldersConfig.forEach(folder => {
+                    const count = galleryItems.filter(item => item.category === folder.category).length;
+                    const folderCard = document.createElement("div");
+                    folderCard.className = "group relative overflow-hidden rounded-2xl border border-brand-border/70 bg-white dark:bg-card shadow-md cursor-pointer transition-all duration-300 hover:shadow-xl hover:border-brand-gold min-h-[320px] flex flex-col justify-end p-6 tilt-card animate-card-fade";
+                    folderCard.onclick = () => selectGalleryCategory(folder.category);
+                    
+                    folderCard.innerHTML = `
+                        <div class="tilt-shine"></div>
+                        <img src="${folder.cover}" alt="${folder.title}" class="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500" />
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent"></div>
+                        <div class="relative z-20 text-white">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="px-2.5 py-1 rounded-full bg-brand-gold/90 text-black font-semibold text-[10px] uppercase tracking-wider">${folder.badge}</span>
+                                <span class="text-xs text-brand-light-gold font-medium">${count} фото</span>
+                            </div>
+                            <h3 class="font-serif text-3xl font-light leading-tight mb-3">${folder.title}</h3>
+                            <div class="inline-flex items-center gap-2 text-xs uppercase tracking-widest font-semibold text-brand-light-gold group-hover:translate-x-1 transition-transform">
+                                <span>Открыть папку</span>
+                                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                            </div>
                         </div>
-                    </div>
+                    `;
+                    galleryGrid.appendChild(folderCard);
+                });
+
+                if (isAdmin) {
+                    const addCard = document.createElement("div");
+                    addCard.className = "editorial-panel rounded-2xl min-h-[320px] flex flex-col items-center justify-center p-6 text-center cursor-pointer z-10 relative tilt-card animate-card-fade border-dashed hover:border-brand-gold/70 transition-all";
+                    addCard.onclick = () => openAddGalleryModal();
+                    addCard.innerHTML = `
+                        <span class="material-symbols-outlined text-4xl text-brand-gold mb-2">add_circle</span>
+                        <h3 class="font-serif text-base font-medium text-brand-dark mb-1">Добавить фото</h3>
+                        <p class="text-[10px] text-brand-secondary font-light">Нажмите для добавления новой работы</p>
+                    `;
+                    galleryGrid.appendChild(addCard);
+                }
+            } else {
+                // Inside a Folder View
+                const backBar = document.createElement("div");
+                backBar.className = "col-span-full flex items-center justify-between bg-brand-gold/10 border border-brand-gold/30 rounded-xl p-4 mb-2";
+                
+                const categoryNames = {
+                    wedding: "💒 Свадебные торты",
+                    kids: "🎈 Детские торты",
+                    festive: "🎉 Праздничные и тематические"
+                };
+
+                const currentName = categoryNames[activeGalleryCategory] || "Папка с работами";
+                const filtered = galleryItems.filter(item => item.category === activeGalleryCategory);
+
+                backBar.innerHTML = `
+                    <button onclick="selectGalleryCategory('folders')" class="inline-flex items-center gap-2 px-4 py-2 bg-brand-primary text-white hover:bg-brand-gold transition-colors rounded-lg text-xs font-semibold uppercase tracking-wider">
+                        <span class="material-symbols-outlined text-sm">arrow_back</span>
+                        <span>Назад ко всем папкам</span>
+                    </button>
+                    <span class="font-serif text-lg font-medium text-brand-primary dark:text-brand-light-gold">${currentName} (${filtered.length})</span>
                 `;
-                galleryGrid.appendChild(card);
-            });
+                galleryGrid.appendChild(backBar);
+
+                if (isAdmin) {
+                    const addCard = document.createElement("div");
+                    addCard.className = "editorial-panel rounded-lg min-h-[380px] flex flex-col items-center justify-center p-6 text-center cursor-pointer z-10 relative tilt-card animate-card-fade border-dashed hover:border-brand-gold/70 transition-all";
+                    addCard.onclick = () => openAddGalleryModal();
+                    addCard.innerHTML = `
+                        <span class="material-symbols-outlined text-4xl text-brand-gold mb-2">add_circle</span>
+                        <h3 class="font-serif text-base font-medium text-brand-dark mb-1">Добавить фото в папку</h3>
+                        <p class="text-[10px] text-brand-secondary font-light">Добавить работу в текущую папку</p>
+                    `;
+                    galleryGrid.appendChild(addCard);
+                }
+
+                filtered.forEach((item, index) => {
+                    const card = document.createElement("div");
+                    card.className = "showcase-card showcase-card-tall group relative overflow-hidden rounded-lg border border-brand-border/60 bg-neutral-100 shadow-sm cursor-pointer tilt-card animate-card-fade opacity-0";
+                    card.style.animationDelay = `${Math.min(index * 35, 320)}ms`;
+                    card.setAttribute("role", "button");
+                    card.setAttribute("tabindex", "0");
+                    card.setAttribute("aria-label", `Открыть торт ${item.title}`);
+                    
+                    // Lightbox mapping
+                    card.onclick = () => openLightbox(index, filtered);
+                    card.addEventListener("keydown", (event) => {
+                        if (event.key === "Enter" || event.key === " ") {
+                            event.preventDefault();
+                            openLightbox(index, filtered);
+                        }
+                    });
+                    
+                    // Admin CRUD buttons on gallery card
+                    const deleteBtn = isAdmin ? `<button onclick="deleteGalleryItem(event, ${item.id})" class="absolute top-3 right-3 p-2 bg-red-500 hover:bg-red-600 text-white rounded-full z-30 shadow-md flex items-center justify-center transition-colors hover:scale-105" title="Удалить"><span class="material-symbols-outlined text-xs">delete</span></button>` : "";
+                    const editBtn = isAdmin ? `<button onclick="openEditGalleryModal(event, ${item.id})" class="absolute top-3 right-12 p-2 bg-brand-primary hover:bg-brand-gold text-white rounded-full z-30 shadow-md flex items-center justify-center transition-colors hover:scale-105" title="Редактировать"><span class="material-symbols-outlined text-xs">edit</span></button>` : "";
+                    
+                    card.innerHTML = `
+                        ${deleteBtn}
+                        ${editBtn}
+                        <div class="tilt-shine"></div>
+                        <img src="${item.image}" alt="${item.title}" class="absolute inset-0 w-full h-full object-cover object-center" loading="lazy" />
+                        <div class="absolute inset-x-0 bottom-0 z-20 p-5 text-white">
+                            <span class="text-[9px] tracking-[0.24em] uppercase text-brand-light-gold font-semibold">${item.tag}</span>
+                            <h3 class="font-serif text-2xl md:text-3xl font-light mt-1 leading-tight">${item.title}</h3>
+                            <div class="flex items-center gap-2 text-[10px] uppercase tracking-wider font-semibold mt-4 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                                <span>Смотреть</span>
+                                <span class="material-symbols-outlined text-sm">open_in_full</span>
+                            </div>
+                        </div>
+                    `;
+                    galleryGrid.appendChild(card);
+                });
+            }
             
             init3DTilt();
         }
@@ -2124,11 +2203,8 @@
         // Gallery Filter event listeners
         galleryFilterBtns.forEach(btn => {
             btn.addEventListener("click", () => {
-                galleryFilterBtns.forEach(b => b.className = "gallery-filter-btn catalog-filter");
-                btn.className = "gallery-filter-btn catalog-filter catalog-filter-active";
-                
-                activeGalleryCategory = btn.getAttribute("data-category");
-                renderGallery();
+                const cat = btn.getAttribute("data-category");
+                selectGalleryCategory(cat);
             });
         });
 
@@ -2198,7 +2274,7 @@
             } else if (!modal.classList.contains("hidden")) {
                 closeModal();
             } else if (!videoModal.classList.contains("hidden")) {
-                closeVideoModal();
+                
             } else if (!document.getElementById("admin-add-filling-modal").classList.contains("hidden")) {
                 closeAddFillingModal();
             } else if (!document.getElementById("admin-add-dessert-modal").classList.contains("hidden")) {
