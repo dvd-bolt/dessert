@@ -431,6 +431,10 @@
                 flex: 0 0 33.333%;
             }
         }
+    
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
     </style>
     <!-- Firebase SDK (Compatibility Version for CDN usage) -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
@@ -619,18 +623,18 @@
                 </p>
             </div>
 
-            <div class="flex flex-wrap gap-2 mb-9 relative z-10" id="gallery-filters">
-                <button class="gallery-filter-btn catalog-filter catalog-filter-active" data-category="folders">📁 Все папки</button>
-                <button class="gallery-filter-btn catalog-filter" data-category="bento">🍱 Бенто-торты</button>
-                <button class="gallery-filter-btn catalog-filter" data-category="kids">🎈 Детские торты</button>
-                <button class="gallery-filter-btn catalog-filter" data-category="women">🌸 Женские торты</button>
-                <button class="gallery-filter-btn catalog-filter" data-category="wedding">💒 Свадебные торты</button>
-                <button class="gallery-filter-btn catalog-filter" data-category="men">🖤 Мужские торты</button>
-                <button class="gallery-filter-btn catalog-filter" data-category="berries">🍓 Ягодные торты</button>
+            <div class="flex flex-nowrap overflow-x-auto no-scrollbar gap-2 pb-2 mb-9 relative z-10 scroll-smooth -mx-6 px-6" id="gallery-filters">
+                <button class="gallery-filter-btn catalog-filter catalog-filter-active whitespace-nowrap shrink-0" data-category="folders">📁 Все папки</button>
+                <button class="gallery-filter-btn catalog-filter whitespace-nowrap shrink-0" data-category="bento">🍱 Бенто-торты</button>
+                <button class="gallery-filter-btn catalog-filter whitespace-nowrap shrink-0" data-category="kids">🎈 Детские торты</button>
+                <button class="gallery-filter-btn catalog-filter whitespace-nowrap shrink-0" data-category="women">🌸 Женские торты</button>
+                <button class="gallery-filter-btn catalog-filter whitespace-nowrap shrink-0" data-category="wedding">💒 Свадебные торты</button>
+                <button class="gallery-filter-btn catalog-filter whitespace-nowrap shrink-0" data-category="men">🖤 Мужские торты</button>
+                <button class="gallery-filter-btn catalog-filter whitespace-nowrap shrink-0" data-category="berries">🍓 Ягодные торты</button>
             </div>
             
             <div class="relative z-10 max-w-7xl mx-auto">
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6" id="gallery-grid">
+                <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6" id="gallery-grid">
                     <!-- Gallery cards are dynamically rendered by JavaScript -->
                 </div>
             </div>
@@ -649,20 +653,20 @@
                     </p>
                     
                     <!-- Categories Filtering -->
-                    <div class="flex flex-wrap lg:flex-col gap-2" id="category-filters">
-                        <button class="filter-btn catalog-filter catalog-filter-active lg:w-full" data-category="all">
+                    <div class="flex flex-nowrap overflow-x-auto lg:flex-col lg:overflow-visible no-scrollbar gap-2 pb-2 lg:pb-0 scroll-smooth" id="category-filters">
+                        <button class="filter-btn catalog-filter catalog-filter-active lg:w-full whitespace-nowrap shrink-0 lg:shrink" data-category="all">
                             Все вкусы (25)
                         </button>
-                        <button class="filter-btn catalog-filter lg:w-full" data-category="chocolate">
+                        <button class="filter-btn catalog-filter lg:w-full whitespace-nowrap shrink-0 lg:shrink" data-category="chocolate">
                             Шоколад и карамель
                         </button>
-                        <button class="filter-btn catalog-filter lg:w-full" data-category="berry">
+                        <button class="filter-btn catalog-filter lg:w-full whitespace-nowrap shrink-0 lg:shrink" data-category="berry">
                             Ягоды и фрукты
                         </button>
-                        <button class="filter-btn catalog-filter lg:w-full" data-category="mousse">
+                        <button class="filter-btn catalog-filter lg:w-full whitespace-nowrap shrink-0 lg:shrink" data-category="mousse">
                             Муссовые и нежные
                         </button>
-                        <button class="filter-btn catalog-filter lg:w-full" data-category="classic">
+                        <button class="filter-btn catalog-filter lg:w-full whitespace-nowrap shrink-0 lg:shrink" data-category="classic">
                             Классические
                         </button>
                     </div>
@@ -709,7 +713,7 @@
                 </p>
             </div>
             
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 md:gap-6 relative z-10" id="desserts-grid">
+            <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6 relative z-10" id="desserts-grid">
                 <!-- Desserts are dynamically rendered here -->
             </div>
         </section>
@@ -2124,7 +2128,7 @@
                 foldersConfig.forEach(folder => {
                     const count = galleryItems.filter(item => item.category === folder.category).length;
                     const folderCard = document.createElement("div");
-                    folderCard.className = "group relative overflow-hidden rounded-2xl border border-brand-border/70 bg-white dark:bg-card shadow-md cursor-pointer transition-all duration-300 hover:shadow-xl hover:border-brand-gold min-h-[320px] flex flex-col justify-end p-6 tilt-card animate-card-fade";
+                    folderCard.className = "group relative overflow-hidden rounded-xl sm:rounded-2xl border border-brand-border/70 bg-white dark:bg-card shadow-md cursor-pointer transition-all duration-300 hover:shadow-xl hover:border-brand-gold min-h-[200px] sm:min-h-[320px] flex flex-col justify-end p-3.5 sm:p-6 tilt-card animate-card-fade";
                     folderCard.onclick = () => selectGalleryCategory(folder.category);
                     
                     folderCard.innerHTML = `
@@ -2136,7 +2140,7 @@
                                 <span class="px-2.5 py-1 rounded-full bg-brand-gold/90 text-black font-semibold text-[10px] uppercase tracking-wider">${folder.badge}</span>
                                 <span class="text-xs text-brand-light-gold font-medium">${count} фото</span>
                             </div>
-                            <h3 class="font-serif text-3xl font-light leading-tight mb-3">${folder.title}</h3>
+                            <h3 class="font-serif text-lg sm:text-3xl font-light leading-tight mb-1 sm:mb-3">${folder.title}</h3>
                             <div class="inline-flex items-center gap-2 text-xs uppercase tracking-widest font-semibold text-brand-light-gold group-hover:translate-x-1 transition-transform">
                                 <span>Открыть папку</span>
                                 <span class="material-symbols-outlined text-sm">arrow_forward</span>
@@ -2807,6 +2811,29 @@
                 requestAnimationFrame(updateGlow);
             }
             updateGlow();
+        })();
+
+        
+        // Lightbox Touch Swipe Gestures for Mobile
+        (function initLightboxSwipe() {
+            let touchStartX = 0;
+            let touchEndX = 0;
+            const lightbox = document.getElementById("gallery-lightbox");
+            if (!lightbox) return;
+
+            lightbox.addEventListener("touchstart", (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+
+            lightbox.addEventListener("touchend", (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                const diff = touchStartX - touchEndX;
+                if (Math.abs(diff) > 45) {
+                    triggerHaptic(12);
+                    if (diff > 0) changeLightboxSlide(1);  // Swipe Left -> Next
+                    else changeLightboxSlide(-1);         // Swipe Right -> Prev
+                }
+            }, { passive: true });
         })();
 
         // Init App
