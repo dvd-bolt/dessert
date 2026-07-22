@@ -7,7 +7,7 @@
     <meta name="description" content="Авторские торты и десерты на заказ в Тимашевске. 25 изысканных начинок, натуральные премиум-ингредиенты, уникальный дизайн для вашего торжества." />
     
     <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..700;1,400..700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..700;1,400..700&family=Great+Vibes&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     
     <!-- Tailwind CSS -->
@@ -28,7 +28,8 @@
                     },
                     fontFamily: {
                         serif: ["EB Garamond", "serif"],
-                        sans: ["Inter", "sans-serif"]
+                        sans: ["Inter", "sans-serif"],
+                        script: ["Great Vibes", "cursive"]
                     }
                 }
             }
@@ -104,30 +105,142 @@
             box-shadow: 0 24px 70px rgba(0, 0, 0, 0.24);
         }
 
+        .nav-wordmark {
+            position: relative;
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.22rem;
+            color: #775a19;
+            font-family: "Great Vibes", cursive;
+            font-size: clamp(1.95rem, 3vw, 2.55rem);
+            font-weight: 400;
+            letter-spacing: 0;
+            line-height: 0.78;
+            white-space: nowrap;
+        }
+
+        .nav-wordmark::before,
+        .nav-wordmark::after {
+            content: "";
+            width: 1.8rem;
+            height: 0.8rem;
+            border-top: 1px solid currentColor;
+            opacity: 0.45;
+            transform: translateY(-0.12rem);
+        }
+
+        .nav-wordmark::before {
+            border-left: 1px solid currentColor;
+            border-radius: 999px 0 0 0;
+        }
+
+        .nav-wordmark::after {
+            border-right: 1px solid currentColor;
+            border-radius: 0 999px 0 0;
+        }
+
+        .nav-wordmark .dessert-script {
+            color: #c5a059;
+            font-size: 0.78em;
+            margin-left: 0.06rem;
+        }
+
+        html.dark .nav-wordmark {
+            color: #ffdea5;
+        }
+
+        .showcase-card,
         .dessert-card {
             min-height: 360px;
             isolation: isolate;
         }
 
+        .showcase-card::after,
         .dessert-card::after {
             content: "";
             position: absolute;
             inset: 0;
-            background: linear-gradient(180deg, rgba(0, 0, 0, 0.03) 30%, rgba(0, 0, 0, 0.7) 100%);
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.02) 24%, rgba(0, 0, 0, 0.76) 100%);
             z-index: 1;
             transition: opacity 0.35s ease;
         }
 
+        .showcase-card:hover::after,
         .dessert-card:hover::after {
             opacity: 0.86;
         }
 
+        .showcase-card img,
         .dessert-card img {
             transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
+        .showcase-card:hover img,
         .dessert-card:hover img {
             transform: scale(1.06);
+        }
+
+        .showcase-card-tall {
+            min-height: 430px;
+        }
+
+        .catalog-filter {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 42px;
+            padding: 0.6rem 1rem;
+            border: 1px solid rgba(229, 226, 225, 0.72);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.62);
+            color: var(--color-text-sec);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            line-height: 1.2;
+            text-align: center;
+            text-transform: uppercase;
+            transition: border-color 0.25s ease, background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .catalog-filter:hover {
+            border-color: rgba(197, 160, 89, 0.62);
+            color: #775a19;
+            box-shadow: 0 12px 34px rgba(119, 90, 25, 0.08);
+        }
+
+        .catalog-filter-active {
+            border-color: #775a19;
+            background: #775a19;
+            color: #fff;
+            box-shadow: 0 14px 36px rgba(119, 90, 25, 0.2);
+        }
+
+        .catalog-filter-active:hover {
+            color: #fff;
+        }
+
+        html.dark .catalog-filter {
+            background: rgba(28, 28, 28, 0.72);
+            border-color: rgba(255, 255, 255, 0.08);
+            color: var(--color-text-sec);
+        }
+
+        html.dark .catalog-filter:hover {
+            border-color: rgba(255, 222, 165, 0.38);
+            color: #ffdea5;
+            box-shadow: 0 12px 34px rgba(0, 0, 0, 0.22);
+        }
+
+        html.dark .catalog-filter-active {
+            background: #c5a059;
+            border-color: #c5a059;
+            color: #121212;
+            box-shadow: 0 14px 36px rgba(197, 160, 89, 0.18);
+        }
+
+        html.dark .catalog-filter-active:hover {
+            color: #121212;
         }
 
         @media (max-width: 767px) {
@@ -143,6 +256,12 @@
                 background-image:
                     linear-gradient(180deg, rgba(18, 18, 18, 0.97) 0%, rgba(18, 18, 18, 0.84) 52%, rgba(18, 18, 18, 0.38) 100%),
                     url("desserts/tarts.jpg");
+            }
+
+            .showcase-card,
+            .showcase-card-tall,
+            .dessert-card {
+                min-height: 360px;
             }
         }
 
@@ -325,10 +444,10 @@
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <a href="#hero" class="flex items-center gap-3">
                 <img src="logo_desert.png" alt="GETMANENKO DESSERT" class="w-10 h-10 object-contain rounded-full border border-brand-gold/30 bg-white shadow-sm" />
-                <div class="flex flex-col items-start">
-                    <span class="font-serif text-xl md:text-2xl font-semibold tracking-wider text-brand-primary leading-none">GETMANENKO</span>
-                    <span class="text-[9px] uppercase tracking-[0.3em] text-brand-secondary font-medium mt-0.5">DESSERT</span>
-                </div>
+                <span class="nav-wordmark" aria-label="GETMANENKO DESSERT">
+                    <span>Getmanenko</span>
+                    <span class="dessert-script">Dessert</span>
+                </span>
             </a>
             
             <!-- Desktop Links -->
@@ -488,67 +607,58 @@
         </section>
 
         <!-- Gallery Section -->
-        <section class="max-w-7xl mx-auto px-6 py-12 mb-20 relative overflow-hidden" id="gallery">
-            <!-- Pinterest-style background outline drawing -->
-            <div class="absolute right-10 top-[20%] w-64 h-64 pointer-events-none opacity-[0.04] dark:opacity-[0.02] text-brand-gold z-0 hidden lg:block">
-                <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.2">
-                    <rect x="25" y="45" width="50" height="10" rx="2" />
-                    <path d="M20 48 L25 48 L25 52 L20 52 Z" />
-                    <path d="M75 48 L80 48 L80 52 L75 52 Z" />
-                    <path d="M15 50 L20 50" stroke-width="2.5" />
-                    <path d="M80 50 L85 50" stroke-width="2.5" />
-                </svg>
-            </div>
-            
-            <div class="text-center mb-8 relative z-10">
-                <h2 class="font-serif text-3xl md:text-4xl font-light text-brand-dark mb-3">Галерея работ</h2>
-                <div class="w-12 h-[1px] bg-brand-gold mx-auto"></div>
-                
+        <section class="max-w-7xl mx-auto px-6 py-16 md:py-20 mb-20 relative overflow-hidden" id="gallery">
+            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-8 relative z-10">
+                <div>
+                    <span class="section-kicker">портфолио тортов</span>
+                    <h2 class="font-serif text-4xl md:text-5xl font-light text-brand-dark mt-2">Галерея работ</h2>
+                </div>
+                <p class="text-sm text-brand-secondary max-w-md font-light leading-relaxed">
+                    Реальные торты для свадеб, детских праздников и камерных событий. Кликните на карточку, чтобы открыть фото крупнее.
+                </p>
             </div>
 
-            <!-- Gallery Filter Buttons -->
-            <div class="flex flex-wrap justify-center gap-2 mb-8 relative z-10" id="gallery-filters">
-                <button class="gallery-filter-btn px-4 py-2 rounded text-xs font-semibold uppercase tracking-wider bg-brand-primary text-white border border-brand-primary transition-all shadow-sm" data-category="all">Все работы</button>
-                <button class="gallery-filter-btn px-4 py-2 rounded text-xs font-semibold uppercase tracking-wider text-brand-secondary hover:text-brand-primary hover:bg-white border border-brand-border/60 transition-all" data-category="wedding">Свадебные торты</button>
-                <button class="gallery-filter-btn px-4 py-2 rounded text-xs font-semibold uppercase tracking-wider text-brand-secondary hover:text-brand-primary hover:bg-white border border-brand-border/60 transition-all" data-category="kids">Детские торты</button>
-                <button class="gallery-filter-btn px-4 py-2 rounded text-xs font-semibold uppercase tracking-wider text-brand-secondary hover:text-brand-primary hover:bg-white border border-brand-border/60 transition-all" data-category="festive">Праздничные / Тематические</button>
+            <div class="flex flex-wrap gap-2 mb-9 relative z-10" id="gallery-filters">
+                <button class="gallery-filter-btn catalog-filter catalog-filter-active" data-category="all">Все работы</button>
+                <button class="gallery-filter-btn catalog-filter" data-category="wedding">Свадебные торты</button>
+                <button class="gallery-filter-btn catalog-filter" data-category="kids">Детские торты</button>
+                <button class="gallery-filter-btn catalog-filter" data-category="festive">Праздничные / Тематические</button>
             </div>
             
-            <!-- Instagram Grid Wrapper -->
             <div class="relative z-10 max-w-7xl mx-auto">
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" id="gallery-grid">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6" id="gallery-grid">
                     <!-- Gallery cards are dynamically rendered by JavaScript -->
                 </div>
             </div>
         </section>
 
         <!-- Interactive Catalog of Fillings (Начинки) -->
-        <section class="max-w-7xl mx-auto px-6 py-12 mb-20" id="fillings">
-            <div class="flex flex-col lg:flex-row gap-12 items-start">
+        <section class="max-w-7xl mx-auto px-6 py-16 md:py-20 mb-20" id="fillings">
+            <div class="flex flex-col lg:flex-row gap-10 lg:gap-12 items-start">
                 
                 <!-- Left Sidebar Column -->
                 <div class="lg:w-1/4 lg:sticky lg:top-28 w-full">
-                    <h2 class="font-serif text-3xl md:text-4xl font-light text-brand-dark mb-4">Наши начинки</h2>
-                    <p class="text-sm text-brand-secondary leading-relaxed mb-6 font-light">
-                        Мы предлагаем 25 неповторимых сочетаний. Выберите любимые ингредиенты или воспользуйтесь быстрым поиском. Кликните на торт, чтобы рассмотреть разрез и прочитать подробный состав.
+                    <span class="section-kicker">каталог вкусов</span>
+                    <h2 class="font-serif text-4xl md:text-5xl lg:text-4xl font-light text-brand-dark mt-2 mb-4">Наши начинки</h2>
+                    <p class="text-sm text-brand-secondary leading-relaxed mb-7 font-light">
+                        Чистая витрина вкусов: выбирайте по названию, категории или поиску, а подробный состав открывайте в карточке.
                     </p>
-                    <div class="w-12 h-[1px] bg-brand-gold mb-8"></div>
                     
                     <!-- Categories Filtering -->
                     <div class="flex flex-wrap lg:flex-col gap-2" id="category-filters">
-                        <button class="filter-btn text-left px-4 py-2 rounded text-sm font-semibold uppercase tracking-wider bg-brand-primary text-white transition-all w-full" data-category="all">
+                        <button class="filter-btn catalog-filter catalog-filter-active lg:w-full" data-category="all">
                             Все вкусы (25)
                         </button>
-                        <button class="filter-btn text-left px-4 py-2 rounded text-sm font-semibold uppercase tracking-wider text-brand-secondary hover:text-brand-primary hover:bg-white transition-all w-full" data-category="chocolate">
+                        <button class="filter-btn catalog-filter lg:w-full" data-category="chocolate">
                             Шоколад и карамель
                         </button>
-                        <button class="filter-btn text-left px-4 py-2 rounded text-sm font-semibold uppercase tracking-wider text-brand-secondary hover:text-brand-primary hover:bg-white transition-all w-full" data-category="berry">
+                        <button class="filter-btn catalog-filter lg:w-full" data-category="berry">
                             Ягоды и фрукты
                         </button>
-                        <button class="filter-btn text-left px-4 py-2 rounded text-sm font-semibold uppercase tracking-wider text-brand-secondary hover:text-brand-primary hover:bg-white transition-all w-full" data-category="mousse">
+                        <button class="filter-btn catalog-filter lg:w-full" data-category="mousse">
                             Муссовые и нежные
                         </button>
-                        <button class="filter-btn text-left px-4 py-2 rounded text-sm font-semibold uppercase tracking-wider text-brand-secondary hover:text-brand-primary hover:bg-white transition-all w-full" data-category="classic">
+                        <button class="filter-btn catalog-filter lg:w-full" data-category="classic">
                             Классические
                         </button>
                     </div>
@@ -564,7 +674,7 @@
                     </div>
                     
                     <!-- Filling Grid -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" id="fillings-grid">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5 md:gap-6" id="fillings-grid">
                         <!-- Cards are dynamically rendered by JavaScript -->
                     </div>
                     
@@ -838,10 +948,14 @@
             <span class="material-symbols-outlined text-3xl">chevron_right</span>
         </button>
         
-        <div class="max-w-4xl max-h-[85vh] flex flex-col items-center justify-center relative select-none">
-            <img id="lightbox-img" class="max-w-full max-h-[70vh] object-contain rounded shadow-2xl transition-transform duration-300" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="Gallery Image" />
-            <div class="text-center mt-4">
+        <div class="max-w-5xl max-h-[90vh] flex flex-col items-center justify-center relative select-none">
+            <img id="lightbox-img" class="max-w-full max-h-[68vh] object-contain rounded-lg shadow-2xl transition-transform duration-300" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="Gallery Image" />
+            <div class="text-center mt-5 max-w-2xl">
                 <span id="lightbox-tag" class="text-xs uppercase tracking-widest text-brand-light-gold font-semibold">Категория</span>
+                <h3 id="lightbox-title" class="font-serif text-3xl md:text-4xl font-light text-white mt-2">Название торта</h3>
+                <a href="#quick-contact" id="lightbox-order-btn" class="inline-flex mt-5 px-7 py-3 bg-brand-primary hover:bg-brand-gold text-white font-semibold uppercase tracking-wider text-xs rounded transition-colors duration-300">
+                    Связаться для заказа
+                </a>
             </div>
         </div>
     </div>
@@ -1570,7 +1684,7 @@
             // Add custom administration card at index 0 if admin
             if (isAdmin) {
                 const addCard = document.createElement("div");
-                addCard.className = "flex flex-col bg-white border border-dashed border-brand-gold/60 rounded-xl overflow-hidden hover:border-brand-primary hover:shadow-md transition-all duration-300 items-center justify-center p-6 text-center cursor-pointer min-h-[300px] z-10 relative tilt-card animate-card-fade";
+                addCard.className = "editorial-panel rounded-lg min-h-[360px] flex flex-col items-center justify-center p-6 text-center cursor-pointer z-10 relative tilt-card animate-card-fade border-dashed hover:border-brand-gold/70 transition-all";
                 addCard.onclick = () => openAddFillingModal();
                 addCard.innerHTML = `
                     <span class="material-symbols-outlined text-4xl text-brand-gold mb-2">add_circle</span>
@@ -1599,35 +1713,36 @@
             } else {
                 emptyState.classList.add("hidden");
                 
-                filtered.forEach(item => {
+                filtered.forEach((item, index) => {
                     const card = document.createElement("div");
-                    card.className = "flex flex-col bg-white border border-brand-border/60 hover:border-brand-gold/60 rounded-xl overflow-hidden hover:shadow-md transition-all duration-300 group cursor-pointer animate-card-fade opacity-0 tilt-card relative";
+                    card.className = "showcase-card group relative overflow-hidden rounded-lg border border-brand-border/60 bg-neutral-100 shadow-sm cursor-pointer animate-card-fade opacity-0 tilt-card";
+                    card.style.animationDelay = `${Math.min(index * 35, 300)}ms`;
+                    card.setAttribute("role", "button");
+                    card.setAttribute("tabindex", "0");
+                    card.setAttribute("aria-label", `Открыть начинку ${item.title}`);
                     card.onclick = () => openModal(item);
+                    card.addEventListener("keydown", (event) => {
+                        if (event.key === "Enter" || event.key === " ") {
+                            event.preventDefault();
+                            openModal(item);
+                        }
+                    });
                     
                     // Admin CRUD elements on card
-                    const deleteBtn = isAdmin ? `<button onclick="deleteFilling(event, ${item.id})" class="absolute top-2 right-2 p-1.5 bg-red-500 hover:bg-red-600 text-white rounded-full z-20 shadow-md flex items-center justify-center transition-colors" title="Удалить"><span class="material-symbols-outlined text-xs">delete</span></button>` : "";
-                    const editBtn = isAdmin ? `<button onclick="openEditFillingModal(event, ${item.id})" class="absolute top-2 right-9 p-1.5 bg-brand-primary hover:bg-brand-gold text-white rounded-full z-20 shadow-md flex items-center justify-center transition-colors" title="Редактировать"><span class="material-symbols-outlined text-xs">edit</span></button>` : "";
+                    const deleteBtn = isAdmin ? `<button onclick="deleteFilling(event, ${item.id})" class="absolute top-3 right-3 p-2 bg-red-500 hover:bg-red-600 text-white rounded-full z-30 shadow-md flex items-center justify-center transition-colors" title="Удалить"><span class="material-symbols-outlined text-xs">delete</span></button>` : "";
+                    const editBtn = isAdmin ? `<button onclick="openEditFillingModal(event, ${item.id})" class="absolute top-3 right-12 p-2 bg-brand-primary hover:bg-brand-gold text-white rounded-full z-30 shadow-md flex items-center justify-center transition-colors" title="Редактировать"><span class="material-symbols-outlined text-xs">edit</span></button>` : "";
                     
                     card.innerHTML = `
                         ${deleteBtn}
                         ${editBtn}
                         <div class="tilt-shine"></div>
-                        <div class="overflow-hidden aspect-video bg-neutral-900 relative">
-                            <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover object-bottom group-hover:scale-105 transition-transform duration-500" loading="lazy" />
-                            <div class="absolute top-3 left-3 flex flex-wrap gap-1">
-                                ${item.tags.slice(0, 2).map(tag => `<span class="bg-black/60 text-white text-[9px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-sm">${tag}</span>`).join('')}
-                            </div>
-                        </div>
-                        <div class="p-5 flex-1 flex flex-col justify-between">
-                            <div>
-                                <h3 class="font-serif text-xl font-medium text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">${item.title}</h3>
-                                <p class="text-xs text-brand-secondary line-clamp-3 leading-relaxed font-light mb-4">
-                                    ${item.ingredients.replace(/\n/g, ', ')}
-                                </p>
-                            </div>
-                            <div class="flex items-center justify-between pt-3 border-t border-brand-border/40 text-xs">
-                                <span class="text-brand-gold font-semibold uppercase tracking-wider">Подробнее</span>
-                                <span class="material-symbols-outlined text-brand-primary text-lg">arrow_forward</span>
+                        <img src="${item.image}" alt="${item.title}" class="absolute inset-0 w-full h-full object-cover object-bottom" loading="lazy" />
+                        <div class="absolute inset-x-0 bottom-0 z-20 p-5 text-white">
+                            <span class="text-[9px] tracking-[0.24em] uppercase text-brand-light-gold font-semibold">начинка торта</span>
+                            <h3 class="font-serif text-2xl font-light mt-1 leading-tight">${item.title}</h3>
+                            <div class="flex items-center gap-2 text-[10px] uppercase tracking-wider font-semibold mt-4 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                                <span>Состав</span>
+                                <span class="material-symbols-outlined text-sm">arrow_forward</span>
                             </div>
                         </div>
                     `;
@@ -1687,8 +1802,8 @@
         // Filter Handlers
         filterBtns.forEach(btn => {
             btn.addEventListener("click", () => {
-                filterBtns.forEach(b => b.className = "filter-btn text-left px-4 py-2 rounded text-sm font-semibold uppercase tracking-wider text-brand-secondary hover:text-brand-primary hover:bg-white transition-all w-full");
-                btn.className = "filter-btn text-left px-4 py-2 rounded text-sm font-semibold uppercase tracking-wider bg-brand-primary text-white transition-all w-full";
+                filterBtns.forEach(b => b.className = "filter-btn catalog-filter lg:w-full");
+                btn.className = "filter-btn catalog-filter catalog-filter-active lg:w-full";
                 
                 activeCategory = btn.getAttribute("data-category");
                 renderFillings();
@@ -1951,7 +2066,7 @@
             
             if (isAdmin) {
                 const addCard = document.createElement("div");
-                addCard.className = "flex flex-col bg-white border border-dashed border-brand-gold/60 rounded-lg overflow-hidden hover:border-brand-primary hover:shadow-md transition-all duration-300 items-center justify-center p-6 text-center cursor-pointer aspect-square z-10 relative tilt-card animate-card-fade";
+                addCard.className = "editorial-panel rounded-lg min-h-[430px] flex flex-col items-center justify-center p-6 text-center cursor-pointer z-10 relative tilt-card animate-card-fade border-dashed hover:border-brand-gold/70 transition-all";
                 addCard.onclick = () => openAddGalleryModal();
                 addCard.innerHTML = `
                     <span class="material-symbols-outlined text-4xl text-brand-gold mb-2">add_circle</span>
@@ -1967,24 +2082,37 @@
             
             filtered.forEach((item, index) => {
                 const card = document.createElement("div");
-                card.className = "group relative overflow-hidden aspect-square bg-neutral-100 border border-brand-border rounded-lg flex flex-col justify-end p-6 hover:shadow-lg transition-all duration-500 cursor-pointer tilt-card animate-card-fade opacity-0";
+                card.className = "showcase-card showcase-card-tall group relative overflow-hidden rounded-lg border border-brand-border/60 bg-neutral-100 shadow-sm cursor-pointer tilt-card animate-card-fade opacity-0";
+                card.style.animationDelay = `${Math.min(index * 35, 320)}ms`;
+                card.setAttribute("role", "button");
+                card.setAttribute("tabindex", "0");
+                card.setAttribute("aria-label", `Открыть торт ${item.title}`);
                 
                 // Lightbox mapping
-                const fullIndex = galleryItems.findIndex(g => g.id === item.id);
-                card.onclick = () => openLightbox(fullIndex);
+                card.onclick = () => openLightbox(index, filtered);
+                card.addEventListener("keydown", (event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault();
+                        openLightbox(index, filtered);
+                    }
+                });
                 
                 // Admin CRUD buttons on gallery card
-                const deleteBtn = isAdmin ? `<button onclick="deleteGalleryItem(event, ${item.id})" class="absolute top-2 right-2 p-1.5 bg-red-500 hover:bg-red-600 text-white rounded-full z-20 shadow-md flex items-center justify-center transition-colors hover:scale-105" title="Удалить"><span class="material-symbols-outlined text-xs">delete</span></button>` : "";
-                const editBtn = isAdmin ? `<button onclick="openEditGalleryModal(event, ${item.id})" class="absolute top-2 right-9 p-1.5 bg-brand-primary hover:bg-brand-gold text-white rounded-full z-20 shadow-md flex items-center justify-center transition-colors hover:scale-105" title="Редактировать"><span class="material-symbols-outlined text-xs">edit</span></button>` : "";
+                const deleteBtn = isAdmin ? `<button onclick="deleteGalleryItem(event, ${item.id})" class="absolute top-3 right-3 p-2 bg-red-500 hover:bg-red-600 text-white rounded-full z-30 shadow-md flex items-center justify-center transition-colors hover:scale-105" title="Удалить"><span class="material-symbols-outlined text-xs">delete</span></button>` : "";
+                const editBtn = isAdmin ? `<button onclick="openEditGalleryModal(event, ${item.id})" class="absolute top-3 right-12 p-2 bg-brand-primary hover:bg-brand-gold text-white rounded-full z-30 shadow-md flex items-center justify-center transition-colors hover:scale-105" title="Редактировать"><span class="material-symbols-outlined text-xs">edit</span></button>` : "";
                 
                 card.innerHTML = `
                     ${deleteBtn}
                     ${editBtn}
                     <div class="tilt-shine"></div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10 opacity-70 group-hover:opacity-85 transition-opacity"></div>
-                    <div class="w-full h-full absolute inset-0 object-cover bg-cover bg-center group-hover:scale-105 transition-transform duration-700" style="background-image: url('${item.image}');"></div>
-                    <div class="relative z-20 text-white">
-                        <span class="text-[9px] tracking-[0.2em] uppercase text-brand-light-gold font-semibold">${item.tag}</span>
+                    <img src="${item.image}" alt="${item.title}" class="absolute inset-0 w-full h-full object-cover object-center" loading="lazy" />
+                    <div class="absolute inset-x-0 bottom-0 z-20 p-5 text-white">
+                        <span class="text-[9px] tracking-[0.24em] uppercase text-brand-light-gold font-semibold">${item.tag}</span>
+                        <h3 class="font-serif text-2xl md:text-3xl font-light mt-1 leading-tight">${item.title}</h3>
+                        <div class="flex items-center gap-2 text-[10px] uppercase tracking-wider font-semibold mt-4 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                            <span>Смотреть</span>
+                            <span class="material-symbols-outlined text-sm">open_in_full</span>
+                        </div>
                     </div>
                 `;
                 galleryGrid.appendChild(card);
@@ -1996,8 +2124,8 @@
         // Gallery Filter event listeners
         galleryFilterBtns.forEach(btn => {
             btn.addEventListener("click", () => {
-                galleryFilterBtns.forEach(b => b.className = "gallery-filter-btn px-4 py-2 rounded text-xs font-semibold uppercase tracking-wider text-brand-secondary hover:text-brand-primary hover:bg-white border border-brand-border/60 transition-all");
-                btn.className = "gallery-filter-btn px-4 py-2 rounded text-xs font-semibold uppercase tracking-wider bg-brand-primary text-white border border-brand-primary transition-all shadow-sm";
+                galleryFilterBtns.forEach(b => b.className = "gallery-filter-btn catalog-filter");
+                btn.className = "gallery-filter-btn catalog-filter catalog-filter-active";
                 
                 activeGalleryCategory = btn.getAttribute("data-category");
                 renderGallery();
@@ -2008,11 +2136,14 @@
         const lightbox = document.getElementById("gallery-lightbox");
         const lightboxImg = document.getElementById("lightbox-img");
         const lightboxTag = document.getElementById("lightbox-tag");
-        // const lightboxTitle = document.getElementById("lightbox-title");
+        const lightboxTitle = document.getElementById("lightbox-title");
+        const lightboxOrderBtn = document.getElementById("lightbox-order-btn");
         let activeSlideIndex = 0;
+        let activeLightboxItems = galleryItems;
         
-        function openLightbox(index) {
+        function openLightbox(index, items = galleryItems) {
             activeSlideIndex = index;
+            activeLightboxItems = items.length ? items : galleryItems;
             populateLightbox();
             ModalManager.open("gallery-lightbox");
         }
@@ -2022,16 +2153,18 @@
         }
         
         function populateLightbox() {
-            const data = galleryItems[activeSlideIndex];
+            const data = activeLightboxItems[activeSlideIndex];
+            if (!data) return;
             lightboxImg.src = data.image;
+            lightboxImg.alt = data.title;
             lightboxTag.textContent = data.tag;
-            // lightboxTitle.textContent = data.title;
+            lightboxTitle.textContent = data.title;
         }
         
         function changeLightboxSlide(direction) {
             activeSlideIndex += direction;
-            if (activeSlideIndex < 0) activeSlideIndex = galleryItems.length - 1;
-            if (activeSlideIndex >= galleryItems.length) activeSlideIndex = 0;
+            if (activeSlideIndex < 0) activeSlideIndex = activeLightboxItems.length - 1;
+            if (activeSlideIndex >= activeLightboxItems.length) activeSlideIndex = 0;
             
             // Fade-out/fade-in image effect
             lightboxImg.style.opacity = 0;
@@ -2043,6 +2176,7 @@
             }, 150);
         }
         
+        lightboxOrderBtn.addEventListener("click", closeLightbox);
         ModalManager.setupOverlayClose("gallery-lightbox", closeLightbox);
         ModalManager.setupOverlayClose("admin-add-filling-modal", () => closeAddFillingModal());
         ModalManager.setupOverlayClose("admin-add-dessert-modal", () => closeAddDessertModal());
