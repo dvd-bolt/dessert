@@ -437,7 +437,14 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
 </head>
-<body class="bg-bg-cream text-brand-dark font-sans antialiased selection:bg-brand-light-gold selection:text-brand-primary">
+
+    <!-- Liquid Gold Ambient Glow Overlay -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
+        <div id="ambient-glow-1" class="absolute w-[500px] h-[500px] rounded-full bg-gradient-to-tr from-brand-gold/15 to-brand-light-gold/5 blur-[120px] transition-transform duration-1000 ease-out -top-24 -left-24"></div>
+        <div id="ambient-glow-2" class="absolute w-[600px] h-[600px] rounded-full bg-gradient-to-br from-brand-primary/10 via-brand-gold/10 to-transparent blur-[140px] transition-transform duration-1000 ease-out bottom-10 -right-36"></div>
+    </div>
+
+    <body class="bg-bg-cream text-brand-dark font-sans antialiased selection:bg-brand-light-gold selection:text-brand-primary">
 
     <!-- Top Navigation Bar -->
     <nav class="fixed top-0 left-0 w-full z-50 transition-all duration-300 border-b border-brand-border/40 glassmorphism" id="main-nav">
@@ -613,10 +620,13 @@
             </div>
 
             <div class="flex flex-wrap gap-2 mb-9 relative z-10" id="gallery-filters">
-                <button class="gallery-filter-btn catalog-filter catalog-filter-active" data-category="folders">📁 Все папки (альбомы)</button>
-                <button class="gallery-filter-btn catalog-filter" data-category="wedding">💒 Свадебные торты</button>
+                <button class="gallery-filter-btn catalog-filter catalog-filter-active" data-category="folders">📁 Все папки</button>
+                <button class="gallery-filter-btn catalog-filter" data-category="bento">🍱 Бенто-торты</button>
                 <button class="gallery-filter-btn catalog-filter" data-category="kids">🎈 Детские торты</button>
-                <button class="gallery-filter-btn catalog-filter" data-category="festive">🎉 Праздничные и тематические</button>
+                <button class="gallery-filter-btn catalog-filter" data-category="women">🌸 Женские торты</button>
+                <button class="gallery-filter-btn catalog-filter" data-category="wedding">💒 Свадебные торты</button>
+                <button class="gallery-filter-btn catalog-filter" data-category="men">🖤 Мужские торты</button>
+                <button class="gallery-filter-btn catalog-filter" data-category="berries">🍓 Ягодные торты</button>
             </div>
             
             <div class="relative z-10 max-w-7xl mx-auto">
@@ -1553,23 +1563,23 @@
             
             // Festive / Themed Category (Праздничные / Тематические торты)
             // Bento:
-            { id: 14, image: "tort/bento/photo_1_2026-07-05_13-19-47.jpg", tag: "Бенто-торт", title: "Бенто-торт с милой надписью", category: "festive" },
-            { id: 15, image: "tort/bento/photo_2_2026-07-05_13-19-47.jpg", tag: "Бенто-торт", title: "Бенто с рисунком", category: "festive" },
-            { id: 16, image: "tort/bento/photo_3_2026-07-05_13-19-47.jpg", tag: "Бенто-торт", title: "Праздничный бенто с посыпкой", category: "festive" },
-            { id: 17, image: "tort/bento/photo_4_2026-07-05_13-19-47.jpg", tag: "Бенто-торт", title: "Шоколадный бенто с кремом", category: "festive" },
-            { id: 18, image: "tort/bento/photo_5_2026-07-05_13-19-47.jpg", tag: "Бенто-торт", title: "Бенто с кремовым сердцем", category: "festive" },
+            { id: 14, image: "tort/bento/photo_1_2026-07-05_13-19-47.jpg", tag: "Бенто-торт", title: "Бенто-торт с милой надписью", category: "bento" },
+            { id: 15, image: "tort/bento/photo_2_2026-07-05_13-19-47.jpg", tag: "Бенто-торт", title: "Бенто с рисунком", category: "bento" },
+            { id: 16, image: "tort/bento/photo_3_2026-07-05_13-19-47.jpg", tag: "Бенто-торт", title: "Праздничный бенто с посыпкой", category: "bento" },
+            { id: 17, image: "tort/bento/photo_4_2026-07-05_13-19-47.jpg", tag: "Бенто-торт", title: "Шоколадный бенто с кремом", category: "bento" },
+            { id: 18, image: "tort/bento/photo_5_2026-07-05_13-19-47.jpg", tag: "Бенто-торт", title: "Бенто с кремовым сердцем", category: "bento" },
             // Berries:
-            { id: 19, image: "tort/berries/photo_1_2026-07-05_13-24-28.jpg", tag: "Ягодный декор", title: "Торт со свежими ягодами и инжиром", category: "festive" },
-            { id: 20, image: "tort/berries/photo_2_2026-07-05_13-24-28.jpg", tag: "Ягодный декор", title: "Торт с веночком из клубники", category: "festive" },
-            { id: 21, image: "tort/berries/photo_3_2026-07-05_13-24-28.jpg", tag: "Ягодный декор", title: "Торт с клубникой и голубикой", category: "festive" },
+            { id: 19, image: "tort/berries/photo_1_2026-07-05_13-24-28.jpg", tag: "Ягодный декор", title: "Торт со свежими ягодами и инжиром", category: "berries" },
+            { id: 20, image: "tort/berries/photo_2_2026-07-05_13-24-28.jpg", tag: "Ягодный декор", title: "Торт с веночком из клубники", category: "berries" },
+            { id: 21, image: "tort/berries/photo_3_2026-07-05_13-24-28.jpg", tag: "Ягодный декор", title: "Торт с клубникой и голубикой", category: "berries" },
             // Men:
-            { id: 22, image: "tort/men/photo_1_2026-07-05_13-23-49.jpg", tag: "Мужской торт", title: "Стильный черный торт для мужчины", category: "festive" },
-            { id: 23, image: "tort/men/photo_2_2026-07-05_13-23-49.jpg", tag: "Мужской торт", title: "Мужской торт с декором", category: "festive" },
-            { id: 24, image: "tort/men/photo_3_2026-07-05_13-23-49.jpg", tag: "Мужской торт", title: "Шоколадный торт с бутылочкой", category: "festive" },
+            { id: 22, image: "tort/men/photo_1_2026-07-05_13-23-49.jpg", tag: "Мужской торт", title: "Стильный черный торт для мужчины", category: "men" },
+            { id: 23, image: "tort/men/photo_2_2026-07-05_13-23-49.jpg", tag: "Мужской торт", title: "Мужской торт с декором", category: "men" },
+            { id: 24, image: "tort/men/photo_3_2026-07-05_13-23-49.jpg", tag: "Мужской торт", title: "Шоколадный торт с бутылочкой", category: "men" },
             // Women (woomen):
-            { id: 25, image: "tort/woomen/photo_1_2026-07-05_13-22-38.jpg", tag: "Женский торт", title: "Нежный торт с вафельным цветком", category: "festive" },
-            { id: 26, image: "tort/woomen/photo_2_2026-07-05_13-22-38.jpg", tag: "Женский торт", title: "Торт в пастельных тонах для девушки", category: "festive" },
-            { id: 27, image: "tort/woomen/photo_3_2026-07-05_13-22-38.jpg", tag: "Женский торт", title: "Элегантный торт с кремовыми розами", category: "festive" }
+            { id: 25, image: "tort/woomen/photo_1_2026-07-05_13-22-38.jpg", tag: "Женский торт", title: "Нежный торт с вафельным цветком", category: "women" },
+            { id: 26, image: "tort/woomen/photo_2_2026-07-05_13-22-38.jpg", tag: "Женский торт", title: "Торт в пастельных тонах для девушки", category: "bento" },
+            { id: 27, image: "tort/woomen/photo_3_2026-07-05_13-22-38.jpg", tag: "Женский торт", title: "Элегантный торт с кремовыми розами", category: "bento" }
         ];
 
         // State variables loading from localStorage
@@ -2047,6 +2057,7 @@
 
         // Render gallery grid (Folders or Photos inside a Folder)
         function selectGalleryCategory(cat) {
+            triggerHaptic(12);
             activeGalleryCategory = cat;
             galleryFilterBtns.forEach(btn => {
                 if (btn.getAttribute("data-category") === cat) {
@@ -2079,7 +2090,7 @@
                         cover: "tort/kids/photo_1_2026-07-05_13-20-38.jpg"
                     },
                     {
-                        category: "festive",
+                        category: "bento",
                         title: "Праздничные и тематические",
                         icon: "folder",
                         badge: "🎉 Альбом",
@@ -2129,9 +2140,12 @@
                 backBar.className = "col-span-full flex items-center justify-between bg-brand-gold/10 border border-brand-gold/30 rounded-xl p-4 mb-2";
                 
                 const categoryNames = {
-                    wedding: "💒 Свадебные торты",
+                    bento: "🍱 Бенто-торты",
                     kids: "🎈 Детские торты",
-                    festive: "🎉 Праздничные и тематические"
+                    women: "🌸 Женские торты",
+                    wedding: "💒 Свадебные торты",
+                    men: "🖤 Мужские торты",
+                    berries: "🍓 Ягодные торты"
                 };
 
                 const currentName = categoryNames[activeGalleryCategory] || "Папка с работами";
@@ -2733,6 +2747,44 @@
                 }
             }
         }
+
+        
+        // Haptic Feedback Helper
+        function triggerHaptic(ms = 12) {
+            if (typeof navigator !== "undefined" && "vibrate" in navigator) {
+                try { navigator.vibrate(ms); } catch (e) {}
+            }
+        }
+
+        // Liquid Gold Ambient Glow Interactive Motion
+        (function initAmbientGlow() {
+            const glow1 = document.getElementById("ambient-glow-1");
+            const glow2 = document.getElementById("ambient-glow-2");
+            if (!glow1 || !glow2) return;
+            
+            let targetX = 0, targetY = 0;
+            let currentX = 0, currentY = 0;
+            
+            window.addEventListener("mousemove", (e) => {
+                targetX = (e.clientX - window.innerWidth / 2) * 0.06;
+                targetY = (e.clientY - window.innerHeight / 2) * 0.06;
+            });
+            
+            window.addEventListener("scroll", () => {
+                targetY = (window.scrollY * 0.04) % 120;
+            });
+            
+            function updateGlow() {
+                currentX += (targetX - currentX) * 0.04;
+                currentY += (targetY - currentY) * 0.04;
+                
+                if (glow1) glow1.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+                if (glow2) glow2.style.transform = `translate3d(${-currentX * 1.2}px, ${-currentY * 1.2}px, 0)`;
+                
+                requestAnimationFrame(updateGlow);
+            }
+            updateGlow();
+        })();
 
         // Init App
         renderFillings();
