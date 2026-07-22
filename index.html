@@ -634,7 +634,7 @@
             </div>
             
             <div class="relative z-10 max-w-7xl mx-auto">
-                <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6" id="gallery-grid">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6" id="gallery-grid">
                     <!-- Gallery cards are dynamically rendered by JavaScript -->
                 </div>
             </div>
@@ -713,7 +713,7 @@
                 </p>
             </div>
             
-            <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6 relative z-10" id="desserts-grid">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 md:gap-6 relative z-10" id="desserts-grid">
                 <!-- Desserts are dynamically rendered here -->
             </div>
         </section>
@@ -2128,7 +2128,7 @@
                 foldersConfig.forEach(folder => {
                     const count = galleryItems.filter(item => item.category === folder.category).length;
                     const folderCard = document.createElement("div");
-                    folderCard.className = "group relative overflow-hidden rounded-xl sm:rounded-2xl border border-brand-border/70 bg-white dark:bg-card shadow-md cursor-pointer transition-all duration-300 hover:shadow-xl hover:border-brand-gold min-h-[200px] sm:min-h-[320px] flex flex-col justify-end p-3.5 sm:p-6 tilt-card animate-card-fade";
+                    folderCard.className = "group relative overflow-hidden rounded-2xl border border-brand-border/70 bg-white dark:bg-card shadow-md cursor-pointer transition-all duration-300 hover:shadow-xl hover:border-brand-gold min-h-[320px] flex flex-col justify-end p-6 tilt-card animate-card-fade";
                     folderCard.onclick = () => selectGalleryCategory(folder.category);
                     
                     folderCard.innerHTML = `
@@ -2140,7 +2140,7 @@
                                 <span class="px-2.5 py-1 rounded-full bg-brand-gold/90 text-black font-semibold text-[10px] uppercase tracking-wider">${folder.badge}</span>
                                 <span class="text-xs text-brand-light-gold font-medium">${count} фото</span>
                             </div>
-                            <h3 class="font-serif text-lg sm:text-3xl font-light leading-tight mb-1 sm:mb-3">${folder.title}</h3>
+                            <h3 class="font-serif text-3xl font-light leading-tight mb-3">${folder.title}</h3>
                             <div class="inline-flex items-center gap-2 text-xs uppercase tracking-widest font-semibold text-brand-light-gold group-hover:translate-x-1 transition-transform">
                                 <span>Открыть папку</span>
                                 <span class="material-symbols-outlined text-sm">arrow_forward</span>
